@@ -191,10 +191,6 @@ public class Utils {
         return controllerValue == JamScreen.ANY_CONTROLLER_AXIS ? "ANY CONTROLLER AXIS" : "Pad" + (controllerValue.controller == null ? "?" : Controllers.getControllers().indexOf(controllerValue.controller, true)) + " Axis " + controllerValue.axisCode + " " + controllerValue.value;
     }
     
-    public static String controllerPovToString(ControllerValue controllerValue) {
-        return controllerValue == JamScreen.ANY_CONTROLLER_POV ? "ANY CONTROLLER POV" : "Pad" + (controllerValue.controller == null ? "?" : Controllers.getControllers().indexOf(controllerValue.controller, true)) + " POV " + controllerValue.axisCode + " " + controllerValue.value;
-    }
-    
     public static float pointDistance(float x1, float y1, float x2, float y2) {
         vector2.set(x1, y1);
         return vector2.dst(x2, y2);

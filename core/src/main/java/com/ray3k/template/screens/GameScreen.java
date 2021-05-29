@@ -126,9 +126,12 @@ public class GameScreen extends JamScreen {
     
         if (isBindingJustPressed(Binding.LEFT)) {
             System.out.println("left");
-        }
-        if (isBindingJustPressed(Binding.UP)) {
+        } else if (isBindingJustPressed(Binding.UP)) {
             System.out.println("up");
+        } else if (isBindingJustPressed(Binding.RIGHT)) {
+            System.out.println("right");
+        } else if (isBindingJustPressed(Binding.DOWN)) {
+            System.out.println("down");
         }
         
         fpsLabel.setText(Gdx.graphics.getFramesPerSecond());
