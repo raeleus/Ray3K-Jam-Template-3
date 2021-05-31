@@ -88,7 +88,6 @@ public abstract class JamScreen extends ScreenAdapter implements InputProcessor,
         scrollJustPressed.clear();
         for (ControllerHandler handler : controllerMap.values()) {
             handler.controllerButtonsJustPressed.clear();
-            handler.controllerPovJustPressed.clear();
             handler.controllerAxisJustPressed.clear();
         }
     }
@@ -515,18 +514,6 @@ public abstract class JamScreen extends ScreenAdapter implements InputProcessor,
         }
     }
     
-    public static void addControllerPovBinding(Binding binding, ControllerValue controllerValue) {
-        keyBindings.remove(binding, Keys.ANY_KEY);
-        buttonBindings.remove(binding, ANY_BUTTON);
-        scrollBindings.remove(binding, ANY_SCROLL);
-        unboundBindings.remove(binding);
-        controllerButtonBindings.remove(binding);
-        controllerAxisBindings.remove(binding);
-        if (!bindings.contains(binding, true)) {
-            bindings.add(binding);
-        }
-    }
-    
     public static void addUnboundBinding(Binding binding) {
         keyBindings.remove(binding, Keys.ANY_KEY);
         buttonBindings.remove(binding, ANY_BUTTON);
@@ -623,7 +610,6 @@ public abstract class JamScreen extends ScreenAdapter implements InputProcessor,
             preferences.remove("scroll:" + binding.key.toString());
             preferences.remove("controllerbutton:" + binding.key.toString());
             preferences.remove("controlleraxis:" + binding.key.toString());
-            preferences.remove("controllerpov:" + binding.key.toString());
             preferences.remove("unbound:" + binding.key.toString());
         }
         
@@ -633,7 +619,6 @@ public abstract class JamScreen extends ScreenAdapter implements InputProcessor,
             preferences.remove("scroll:" + binding.key.toString());
             preferences.remove("controllerbutton:" + binding.key.toString());
             preferences.remove("controlleraxis:" + binding.key.toString());
-            preferences.remove("controllerpov:" + binding.key.toString());
             preferences.remove("unbound:" + binding.key.toString());
         }
         
@@ -643,7 +628,6 @@ public abstract class JamScreen extends ScreenAdapter implements InputProcessor,
             preferences.remove("button:" + binding.key.toString());
             preferences.remove("controllerbutton:" + binding.key.toString());
             preferences.remove("controlleraxis:" + binding.key.toString());
-            preferences.remove("controllerpov:" + binding.key.toString());
             preferences.remove("unbound:" + binding.key.toString());
         }
         
@@ -653,7 +637,6 @@ public abstract class JamScreen extends ScreenAdapter implements InputProcessor,
             preferences.remove("button:" + binding.key.toString());
             preferences.remove("scroll:" + binding.key.toString());
             preferences.remove("controlleraxis:" + binding.key.toString());
-            preferences.remove("controllerpov:" + binding.key.toString());
             preferences.remove("unbound:" + binding.key.toString());
         }
         
@@ -663,7 +646,6 @@ public abstract class JamScreen extends ScreenAdapter implements InputProcessor,
             preferences.remove("button:" + binding.key.toString());
             preferences.remove("scroll:" + binding.key.toString());
             preferences.remove("controllerbutton:" + binding.key.toString());
-            preferences.remove("controllerpov:" + binding.key.toString());
             preferences.remove("unbound:" + binding.key.toString());
         }
         
@@ -674,7 +656,6 @@ public abstract class JamScreen extends ScreenAdapter implements InputProcessor,
             preferences.remove("scroll:" + binding.toString());
             preferences.remove("controllerbutton:" + binding.toString());
             preferences.remove("controlleraxis:" + binding.toString());
-            preferences.remove("controllerpov:" + binding.toString());
         }
         preferences.flush();
     }
@@ -720,19 +701,6 @@ public abstract class JamScreen extends ScreenAdapter implements InputProcessor,
                 controllerValue.axisCode = Integer.parseInt(line[1]);
                 controllerValue.value = Integer.parseInt(line[2]);
                 JamScreen.addControllerAxisBinding(binding, controllerValue);
-            }
-            
-            key = "controllerpov:" + binding.toString();
-            if (preferences.contains(key)) {
-                ControllerValue controllerValue = new ControllerValue();
-                String[] line = preferences.getString(key).split(" ");
-                var controllerIndex = Integer.parseInt(line[0]);
-                if (controllerIndex < Controllers.getControllers().size) {
-                    controllerValue.controller = Controllers.getControllers().get(controllerIndex);
-                }
-                controllerValue.axisCode = Integer.parseInt(line[1]);
-                controllerValue.value = Integer.parseInt(line[2]);
-                JamScreen.addControllerPovBinding(binding, controllerValue);
             }
             
             key = "unbound:" + binding.toString();
@@ -819,8 +787,6 @@ public abstract class JamScreen extends ScreenAdapter implements InputProcessor,
         public Array<ControllerValue> controllerButtonsPressed = new Array<>();
         public Array<ControllerValue> controllerAxisJustPressed = new Array<>();
         public Array<ControllerValue> controllerAxisPressed = new SnapshotArray<>();
-        public Array<ControllerValue> controllerPovJustPressed = new Array<>();
-        public Array<ControllerValue> controllerPovPressed = new Array<>();
     
         //button
     
