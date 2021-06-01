@@ -7,23 +7,29 @@ import com.esotericsoftware.spine.SkeletonRenderer;
 import com.esotericsoftware.spine.utils.SkeletonDrawable;
 
 public class SpineDrawable extends SkeletonDrawable {
-    public SpineDrawable() {
-        calcMinSize();
-    }
+    private float cropX;
+    private float cropY;
+    private float cropWidth;
+    private float cropHeight;
     
     public SpineDrawable(SkeletonRenderer renderer, Skeleton skeleton,
                          AnimationState state) {
         super(renderer, skeleton, state);
-        calcMinSize();
+        setCrop(getSkeleton().getData().getX(), getSkeleton().getData().getY(), getSkeleton().getData().getWidth(),
+                getSkeleton().getData().getHeight());
     }
     
-    private void calcMinSize() {
-        setMinSize(getSkeleton().getData().getWidth(), getSkeleton().getData().getHeight());
+    public void setCrop(float x, float y, float width, float height) {
+        cropX = x;
+        cropY = y;
+        cropWidth = width;
+        cropHeight = height;
+        setMinSize(cropWidth, cropHeight);
     }
     
     @Override
     public void draw(Batch batch, float x, float y, float width, float height) {
-        getSkeleton().setScale(width / getMinWidth(), height / getMinHeight());
-        super.draw(batch, x - getSkeleton().getData().getX(), y - getSkeleton().getData().getY(), width, height);
+        getSkeleton().setScale(width / cropWidth, height / cropHeight);
+        super.draw(batch, x - cropX, y - cropY, width, height);
     }
 }
