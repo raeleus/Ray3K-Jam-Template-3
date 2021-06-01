@@ -17,6 +17,7 @@
     <inherits name="com.badlogic.gdx.controllers" />
     <inherits name="com.badlogic.gdx.controllers.controllers-gwt"/>
     <inherits name="com.dongbat.jbump" />
+    <inherits name="com.badlogic.gdx.video.gdx_video_gwt" />
 	<entry-point class="com.ray3k.template.gwt.GwtLauncher" />
 	<set-configuration-property name="gdx.assetpath" value="../assets" />
 	<set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>
