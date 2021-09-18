@@ -36,9 +36,7 @@ public class LogoScreen extends JamScreen {
         spineDrawables = new Array<>();
         sounds = new ObjectSet<>();
     
-        Skeleton skeleton = new Skeleton(skeletonData);
-        AnimationState animationState = new AnimationState(animationData);
-        var spineDrawable = new SpineDrawable(skeletonRenderer, skeleton, animationState);
+        var spineDrawable = new SpineDrawable(skeletonRenderer, skeletonData, animationData);
         spineDrawable.getAnimationState().setAnimation(0, animationStand, false);
         spineDrawable.getAnimationState().apply(spineDrawable.getSkeleton());
         spineDrawables.add(spineDrawable);

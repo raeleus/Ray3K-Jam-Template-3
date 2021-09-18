@@ -1,9 +1,7 @@
 package com.ray3k.template;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.esotericsoftware.spine.AnimationState;
-import com.esotericsoftware.spine.Skeleton;
-import com.esotericsoftware.spine.SkeletonRenderer;
+import com.esotericsoftware.spine.*;
 import com.esotericsoftware.spine.utils.SkeletonDrawable;
 
 public class SpineDrawable extends SkeletonDrawable {
@@ -17,6 +15,10 @@ public class SpineDrawable extends SkeletonDrawable {
         super(renderer, skeleton, state);
         setCrop(getSkeleton().getData().getX(), getSkeleton().getData().getY(), getSkeleton().getData().getWidth(),
                 getSkeleton().getData().getHeight());
+    }
+    
+    public SpineDrawable(SkeletonRenderer renderer, SkeletonData skeletonData, AnimationStateData animationStateData) {
+        this(renderer, new Skeleton(skeletonData), new AnimationState(animationStateData));
     }
     
     public void setCrop(float x, float y, float width, float height) {
