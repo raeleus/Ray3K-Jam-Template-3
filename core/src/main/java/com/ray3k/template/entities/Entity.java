@@ -77,6 +77,20 @@ public abstract class Entity {
         this.y = y;
     }
     
+    public void teleport(float x, float y) {
+        this.x = x;
+        this.y = y;
+        if (item != null & world.hasItem(item)) {
+            world.update(item, x, y);
+        }
+    }
+    
+    public void teleport() {
+        if (item != null & world.hasItem(item)) {
+            world.update(item, x, y);
+        }
+    }
+    
     public void setSpeed(float speed) {
         setMotion(speed, getDirection());
     }
