@@ -1,18 +1,45 @@
 package com.ray3k.template.listupdater;
 
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.SkinLoader;
+import com.badlogic.gdx.assets.loaders.SkinLoader.SkinParameter;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox.CheckBoxStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton.ImageTextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.List.ListStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane.ScrollPaneStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox.SelectBoxStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.SplitPane.SplitPaneStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip.TextTooltipStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad.TouchpadStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Tree.TreeStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.ObjectMap.Entry;
 import com.esotericsoftware.spine.Animation;
 import com.esotericsoftware.spine.AnimationStateData;
 import com.esotericsoftware.spine.SkeletonData;
 import com.esotericsoftware.spine.SkeletonJson;
 import com.esotericsoftware.spine.attachments.*;
+import com.ray3k.stripe.FreeTypeSkinLoader;
 import com.squareup.javapoet.*;
 
 import javax.lang.model.element.Modifier;
@@ -27,23 +54,29 @@ public class ListUpdater {
     private final static LameDuckAttachmentLoader lameDuckAttachmentLoader = new LameDuckAttachmentLoader();
     
     public static void main(String args[]) {
-        System.out.println("Check if lists need to be updated.");
-        
-        var resources = new Array<ResourceDescriptor>();
-        
-        boolean updated = createList("skin", "json", Paths.get("assets/skin.txt").toFile(), Skin.class, resources);
-        updated |= createList("spine", "json", Paths.get("assets/spine.txt").toFile(), SkeletonData.class, resources);
-        updated |= createList("textures", "atlas", Paths.get("assets/textures.txt").toFile(), TextureAtlas.class, resources);
-        updated |= createList("sfx", "mp3", Paths.get("assets/sfx.txt").toFile(), Sound.class, resources);
-        updated |= createList("bgm", "mp3", Paths.get("assets/bgm.txt").toFile(), Music.class, resources);
-        
-        writeResources(resources, Paths.get("core/src/main/java/com/ray3k/template/Resources.java").toFile(), new FileHandle(Paths.get("assets/data").toFile()));
-        
-        if (updated) {
-            System.out.println("Updated lists.");
-        } else {
-            System.out.println("Lists not updated.");
-        }
+        new Lwjgl3Application(new ApplicationAdapter() {
+            @Override
+            public void create() {
+                System.out.println("Check if lists need to be updated.");
+    
+                var resources = new Array<ResourceDescriptor>();
+    
+                boolean updated = createList("textures", "atlas", Paths.get("assets/textures.txt").toFile(), TextureAtlas.class, resources);
+                updated |= createList("spine", "json", Paths.get("assets/spine.txt").toFile(), SkeletonData.class, resources);
+                updated |= createList("skin", "json", Paths.get("assets/skin.txt").toFile(), Skin.class, resources);
+                updated |= createList("sfx", "mp3", Paths.get("assets/sfx.txt").toFile(), Sound.class, resources);
+                updated |= createList("bgm", "mp3", Paths.get("assets/bgm.txt").toFile(), Music.class, resources);
+    
+                writeResources(resources, Paths.get("core/src/main/java/com/ray3k/template/Resources.java").toFile(), new FileHandle(Paths.get("assets/data").toFile()));
+    
+                if (updated) {
+                    System.out.println("Updated lists.");
+                } else {
+                    System.out.println("Lists not updated.");
+                }
+                Gdx.app.exit();
+            }
+        }, new Lwjgl3ApplicationConfiguration());
     }
     
     private static boolean createList(String folderName, String extension, File outputPath, Class type, Array<ResourceDescriptor> resources) {
@@ -129,7 +162,9 @@ public class ListUpdater {
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .addParameter(AssetManager.class, "assetManager");
         var subTypes = new Array<TypeSpec>();
+        String textureAtlasPath = "";
         for (var resource : resources) {
+            if (resource.type.equals(TextureAtlas.class)) textureAtlasPath = sanitizePath(resource.file.path());
             if (resource.type.equals(SkeletonData.class)) {
                 var name = sanitizeVariableName(resource.file.nameWithoutExtension());
                 name = "Spine" + upperCaseFirstLetter(name);
@@ -159,7 +194,38 @@ public class ListUpdater {
                 }
                 
                 subTypes.add(typeSpecBuilder.build());
-            } else {
+            }
+            else if (resource.type.equals(Skin.class)) {
+                methodSpecBuilder.addStatement("$L = assetManager.get($S)", resource.variableName, sanitizePath(resource.file.path()));
+                var className = camelCaseUpper(resource.variableName) + "Styles";
+                var typeSpecBuilder = TypeSpec.classBuilder(className)
+                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC);
+                
+                AssetManager assetManager = new AssetManager();
+                assetManager.setLoader(Skin.class, new FreeTypeSkinLoader(assetManager.getFileHandleResolver()));
+                var skinPath = sanitizePath(resource.file.path());
+                assetManager.load(skinPath, Skin.class, new SkinParameter(textureAtlasPath));
+                assetManager.finishLoading();
+                Skin skin = assetManager.get(skinPath);
+                var classes = new Class[] {ButtonStyle.class, CheckBoxStyle.class, ImageButtonStyle.class,
+                        ImageTextButtonStyle.class, LabelStyle.class, ListStyle.class, ProgressBarStyle.class,
+                        ScrollPaneStyle.class, SelectBoxStyle.class, SliderStyle.class, SplitPaneStyle.class,
+                        TextButtonStyle.class, TextFieldStyle.class, TextTooltipStyle.class, TouchpadStyle.class,
+                        TreeStyle.class, WindowStyle.class};
+                var abbreviations = new String[] {"b", "cb", "ib", "itb", "l", "lst", "p", "sp", "sb", "s", "splt", "tb", "tf", "tt", "ts", "t", "w"};
+                for (int i = 0; i < classes.length; i++) {
+                    var styles = skin.getAll(classes[i]);
+                    for (Object object : styles.entries()) {
+                        var entry = (Entry) object;
+                        var variableName = abbreviations[i] + upperCaseFirstLetter(sanitizeVariableName((String) entry.key));
+                        typeSpecBuilder.addField(classes[i], variableName, Modifier.PUBLIC, Modifier.STATIC);
+                        methodSpecBuilder.addStatement("$L.$L = $L.get($S, $T.class)", className, variableName, resource.variableName, entry.key, classes[i]);
+                    }
+                }
+
+                subTypes.add(typeSpecBuilder.build());
+            }
+            else {
                 methodSpecBuilder.addStatement("$L = assetManager.get($S)", resource.variableName, sanitizePath(resource.file.path()));
             }
         }
@@ -259,6 +325,32 @@ public class ListUpdater {
     
     private static String upperCaseFirstLetter(String string) {
         return Character.toUpperCase(string.charAt(0)) + string.substring(1);
+    }
+    
+    private static String camelCaseUpper(String string) {
+        String[] words = string.split("[\\W_]+");
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
+            word = word.isEmpty() ? word : Character.toUpperCase(word.charAt(0)) + word.substring(1).toLowerCase();
+            builder.append(word);
+        }
+        return builder.toString();
+    }
+    
+    private static String camelCaseLower(String string) {
+        String[] words = string.split("[\\W_]+");
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
+            if (i == 0) {
+                word = word.isEmpty() ? word : word.toLowerCase();
+            } else {
+                word = word.isEmpty() ? word : Character.toUpperCase(word.charAt(0)) + word.substring(1).toLowerCase();
+            }
+            builder.append(word);
+        }
+        return builder.toString();
     }
     
     private static class LameDuckAttachmentLoader implements AttachmentLoader {

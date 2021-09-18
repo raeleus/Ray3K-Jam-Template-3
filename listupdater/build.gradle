@@ -10,11 +10,16 @@ dependencies {
     implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
     api 'com.esotericsoftware.spine:spine-libgdx:3.8.55.1'
     api "com.squareup:javapoet:1.13.0"
+    api 'com.github.raeleus.TenPatch:tenpatch:5.0.0'
+    api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+    api 'com.github.raeleus:stripe:master-SNAPSHOT'
+    api 'space.earlygrey:shapedrawer:2.4.0'
 }
 
 import org.gradle.internal.os.OperatingSystem
 
 run {
+    workingDir = rootProject.file('assets').path
     setIgnoreExitValue(true)
 
     if (OperatingSystem.current() == OperatingSystem.MAC_OS) {

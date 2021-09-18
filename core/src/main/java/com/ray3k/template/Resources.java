@@ -4,16 +4,33 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.SplitPane;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.ui.Tree;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.esotericsoftware.spine.Animation;
 import com.esotericsoftware.spine.AnimationStateData;
 import com.esotericsoftware.spine.SkeletonData;
 import java.lang.String;
 
 public class Resources {
-    public static Skin skin_skin;
-
     public static TextureAtlas textures_textures;
+
+    public static Skin skin_skin;
 
     public static Sound sfx_ahh;
 
@@ -34,7 +51,7 @@ public class Resources {
     public static Music bgm_menu;
 
     public static void loadResources(AssetManager assetManager) {
-        skin_skin = assetManager.get("skin/skin.json");
+        textures_textures = assetManager.get("textures/textures.atlas");
         SpineLibgdx.skeletonData = assetManager.get("spine/libgdx.json");
         SpineLibgdx.animationData = assetManager.get("spine/libgdx.json-animation");
         SpineLibgdx.animationAnimation = SpineLibgdx.skeletonData.findAnimation("animation");
@@ -45,7 +62,37 @@ public class Resources {
         SpineRay3k.animationAnimation = SpineRay3k.skeletonData.findAnimation("animation");
         SpineRay3k.animationStand = SpineRay3k.skeletonData.findAnimation("stand");
         SpineRay3k.skinDefault = SpineRay3k.skeletonData.findSkin("default");
-        textures_textures = assetManager.get("textures/textures.atlas");
+        skin_skin = assetManager.get("skin/skin.json");
+        SkinSkinStyles.bClose = skin_skin.get("close", Button.ButtonStyle.class);
+        SkinSkinStyles.bDefault = skin_skin.get("default", Button.ButtonStyle.class);
+        SkinSkinStyles.bPause = skin_skin.get("pause", Button.ButtonStyle.class);
+        SkinSkinStyles.bToggle = skin_skin.get("toggle", Button.ButtonStyle.class);
+        SkinSkinStyles.bStop = skin_skin.get("stop", Button.ButtonStyle.class);
+        SkinSkinStyles.bPlay = skin_skin.get("play", Button.ButtonStyle.class);
+        SkinSkinStyles.cbDefault = skin_skin.get("default", CheckBox.CheckBoxStyle.class);
+        SkinSkinStyles.ibDefault = skin_skin.get("default", ImageButton.ImageButtonStyle.class);
+        SkinSkinStyles.itbDefault = skin_skin.get("default", ImageTextButton.ImageTextButtonStyle.class);
+        SkinSkinStyles.itbRadio = skin_skin.get("radio", ImageTextButton.ImageTextButtonStyle.class);
+        SkinSkinStyles.lSmall = skin_skin.get("small", Label.LabelStyle.class);
+        SkinSkinStyles.lDefault = skin_skin.get("default", Label.LabelStyle.class);
+        SkinSkinStyles.lstSelectBox = skin_skin.get("select-box", List.ListStyle.class);
+        SkinSkinStyles.pDefaultVertical = skin_skin.get("default-vertical", ProgressBar.ProgressBarStyle.class);
+        SkinSkinStyles.pDefaultHorizontal = skin_skin.get("default-horizontal", ProgressBar.ProgressBarStyle.class);
+        SkinSkinStyles.spSelectBox = skin_skin.get("select-box", ScrollPane.ScrollPaneStyle.class);
+        SkinSkinStyles.spDefault = skin_skin.get("default", ScrollPane.ScrollPaneStyle.class);
+        SkinSkinStyles.sbDefault = skin_skin.get("default", SelectBox.SelectBoxStyle.class);
+        SkinSkinStyles.sScrubber = skin_skin.get("scrubber", Slider.SliderStyle.class);
+        SkinSkinStyles.sDefaultVertical = skin_skin.get("default-vertical", Slider.SliderStyle.class);
+        SkinSkinStyles.sDefaultHorizontal = skin_skin.get("default-horizontal", Slider.SliderStyle.class);
+        SkinSkinStyles.spltDefaultVertical = skin_skin.get("default-vertical", SplitPane.SplitPaneStyle.class);
+        SkinSkinStyles.spltDefaultHorizontal = skin_skin.get("default-horizontal", SplitPane.SplitPaneStyle.class);
+        SkinSkinStyles.tbToggle = skin_skin.get("toggle", TextButton.TextButtonStyle.class);
+        SkinSkinStyles.tbDefault = skin_skin.get("default", TextButton.TextButtonStyle.class);
+        SkinSkinStyles.tfDefault = skin_skin.get("default", TextField.TextFieldStyle.class);
+        SkinSkinStyles.ttDefault = skin_skin.get("default", TextTooltip.TextTooltipStyle.class);
+        SkinSkinStyles.tsDefault = skin_skin.get("default", Touchpad.TouchpadStyle.class);
+        SkinSkinStyles.tDefault = skin_skin.get("default", Tree.TreeStyle.class);
+        SkinSkinStyles.wDefault = skin_skin.get("default", Window.WindowStyle.class);
         sfx_ahh = assetManager.get("sfx/ahh.mp3");
         sfx_click = assetManager.get("sfx/click.mp3");
         sfx_libgdx = assetManager.get("sfx/libgdx.mp3");
@@ -79,6 +126,68 @@ public class Resources {
         public static Animation animationStand;
 
         public static com.esotericsoftware.spine.Skin skinDefault;
+    }
+
+    public static class SkinSkinStyles {
+        public static Button.ButtonStyle bClose;
+
+        public static Button.ButtonStyle bDefault;
+
+        public static Button.ButtonStyle bPause;
+
+        public static Button.ButtonStyle bToggle;
+
+        public static Button.ButtonStyle bStop;
+
+        public static Button.ButtonStyle bPlay;
+
+        public static CheckBox.CheckBoxStyle cbDefault;
+
+        public static ImageButton.ImageButtonStyle ibDefault;
+
+        public static ImageTextButton.ImageTextButtonStyle itbDefault;
+
+        public static ImageTextButton.ImageTextButtonStyle itbRadio;
+
+        public static Label.LabelStyle lSmall;
+
+        public static Label.LabelStyle lDefault;
+
+        public static List.ListStyle lstSelectBox;
+
+        public static ProgressBar.ProgressBarStyle pDefaultVertical;
+
+        public static ProgressBar.ProgressBarStyle pDefaultHorizontal;
+
+        public static ScrollPane.ScrollPaneStyle spSelectBox;
+
+        public static ScrollPane.ScrollPaneStyle spDefault;
+
+        public static SelectBox.SelectBoxStyle sbDefault;
+
+        public static Slider.SliderStyle sScrubber;
+
+        public static Slider.SliderStyle sDefaultVertical;
+
+        public static Slider.SliderStyle sDefaultHorizontal;
+
+        public static SplitPane.SplitPaneStyle spltDefaultVertical;
+
+        public static SplitPane.SplitPaneStyle spltDefaultHorizontal;
+
+        public static TextButton.TextButtonStyle tbToggle;
+
+        public static TextButton.TextButtonStyle tbDefault;
+
+        public static TextField.TextFieldStyle tfDefault;
+
+        public static TextTooltip.TextTooltipStyle ttDefault;
+
+        public static Touchpad.TouchpadStyle tsDefault;
+
+        public static Tree.TreeStyle tDefault;
+
+        public static Window.WindowStyle wDefault;
     }
 
     public static class Values {
