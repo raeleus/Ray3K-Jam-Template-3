@@ -194,4 +194,20 @@ public abstract class Entity {
     public float getCollisionBoxCenterY() {
         return y + bboxY + bboxHeight / 2;
     }
+    
+    public void setCollisionBoxLeft(float x) {
+        this.x = x - bboxX;
+    }
+    
+    public void setCollisionBoxRight(float x) {
+        this.x = x - bboxX - bboxWidth;
+    }
+    
+    public void setCollisionBoxBottom(float y) {
+        this.y = y - bboxY;
+    }
+    
+    public void setCollisionBoxTop(float y) {
+        this.y = y - bboxY - bboxHeight;
+    }
 }
