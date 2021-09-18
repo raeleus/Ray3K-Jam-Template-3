@@ -185,7 +185,7 @@
 						"clazz": "com.badlogic.gdx.scenes.scene2d.ui.Label",
 						"name": "default"
 					},
-					"text": "Copyright Raymond \"Raeleus\" Buckley © 2020",
+					"text": "Copyright Raymond \"Raeleus\" Buckley © 2021",
 					"textAlignment": 8,
 					"ellipsis": false,
 					"ellipsisString": "...",
