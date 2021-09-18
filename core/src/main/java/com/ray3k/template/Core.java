@@ -17,6 +17,7 @@ import com.dongbat.jbump.World;
 import com.esotericsoftware.spine.AnimationStateData;
 import com.esotericsoftware.spine.SkeletonData;
 import com.esotericsoftware.spine.SkeletonRenderer;
+import com.ray3k.stripe.FreeTypeSkinLoader;
 import com.ray3k.template.AnimationStateDataLoader.*;
 import com.ray3k.template.entities.*;
 import com.ray3k.template.screens.*;
@@ -87,7 +88,7 @@ public class Core extends JamGame {
     
     @Override
     public void loadAssets() {
-        assetManager.setLoader(Skin.class, new SkinFreeTypeLoader(assetManager.getFileHandleResolver()));
+        assetManager.setLoader(Skin.class, new FreeTypeSkinLoader(assetManager.getFileHandleResolver()));
         assetManager.setLoader(SkeletonData.class, new SkeletonDataLoader(assetManager.getFileHandleResolver()));
         assetManager.setLoader(AnimationStateData.class, new AnimationStateDataLoader(assetManager.getFileHandleResolver()));
         
