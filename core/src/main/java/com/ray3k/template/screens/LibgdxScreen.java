@@ -15,12 +15,10 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.esotericsoftware.spine.AnimationState;
 import com.esotericsoftware.spine.Event;
-import com.esotericsoftware.spine.Skeleton;
 import com.esotericsoftware.spine.utils.SkeletonDrawable;
 import com.ray3k.template.*;
 
 import static com.ray3k.template.Core.*;
-import static com.ray3k.template.JamGame.*;
 import static com.ray3k.template.Resources.SpineLibgdx.*;
 
 public class LibgdxScreen extends JamScreen {
@@ -39,6 +37,7 @@ public class LibgdxScreen extends JamScreen {
         var spineDrawable = new SpineDrawable(skeletonRenderer, skeletonData, animationData);
         spineDrawable.getAnimationState().setAnimation(0, animationStand, false);
         spineDrawable.getAnimationState().apply(spineDrawable.getSkeleton());
+        spineDrawable.setCrop(0, 0, 1024, 576);
         spineDrawables.add(spineDrawable);
         
         stage = new Stage(new ScreenViewport(), batch);
