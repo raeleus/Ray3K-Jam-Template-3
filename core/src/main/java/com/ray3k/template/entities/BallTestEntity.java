@@ -27,7 +27,7 @@ public class BallTestEntity extends Entity {
         gameScreen = GameScreen.gameScreen;
         viewport = gameScreen.viewport;
         camera = gameScreen.camera;
-        shapeDrawer = JamGame.shapeDrawer;
+        shapeDrawer = GameScreen.gameScreen.shapeDrawer;
         
         color.set(Color.RED);
         
