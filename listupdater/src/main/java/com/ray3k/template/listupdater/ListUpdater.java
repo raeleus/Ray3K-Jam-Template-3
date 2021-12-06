@@ -58,17 +58,17 @@ public class ListUpdater {
             @Override
             public void create() {
                 System.out.println("Check if lists need to be updated.");
-    
+                
                 var resources = new Array<ResourceDescriptor>();
-    
+                
                 boolean updated = createList("textures", "atlas", Paths.get("assets/textures.txt").toFile(), TextureAtlas.class, resources);
                 updated |= createList("spine", "json", Paths.get("assets/spine.txt").toFile(), SkeletonData.class, resources);
                 updated |= createList("skin", "json", Paths.get("assets/skin.txt").toFile(), Skin.class, resources);
                 updated |= createList("sfx", "mp3", Paths.get("assets/sfx.txt").toFile(), Sound.class, resources);
-                updated |= createList("bgm", "mp3", Paths.get("assets/bgm.txt").toFile(), Music.class, resources);
-    
+                updated |= createList("bgm", "ogg", Paths.get("assets/bgm.txt").toFile(), Music.class, resources);
+                
                 writeResources(resources, Paths.get("core/src/main/java/com/ray3k/template/Resources.java").toFile(), new FileHandle(Paths.get("assets/data").toFile()));
-    
+                
                 if (updated) {
                     System.out.println("Updated lists.");
                 } else {
@@ -173,7 +173,7 @@ public class ListUpdater {
                 
                 var typeSpecBuilder = TypeSpec.classBuilder(name)
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC);
-    
+                
                 typeSpecBuilder.addField(SkeletonData.class, "skeletonData", Modifier.PUBLIC, Modifier.STATIC);
                 typeSpecBuilder.addField(AnimationStateData.class, "animationData", Modifier.PUBLIC, Modifier.STATIC);
                 
@@ -189,7 +189,7 @@ public class ListUpdater {
                 for (var skin : skeletonData.getSkins()) {
                     var variableName = "skin" + upperCaseFirstLetter(sanitizeVariableName(skin.getName()));
                     typeSpecBuilder.addField(com.esotericsoftware.spine.Skin.class, variableName, Modifier.PUBLIC, Modifier.STATIC);
-    
+                    
                     methodSpecBuilder.addStatement("$L.$L = $L.skeletonData.findSkin($S)", name, variableName, name, skin.getName());
                 }
                 
@@ -215,14 +215,14 @@ public class ListUpdater {
                 var abbreviations = new String[] {"b", "cb", "ib", "itb", "l", "lst", "p", "sp", "sb", "s", "splt", "tb", "tf", "tt", "ts", "t", "w"};
                 for (int i = 0; i < classes.length; i++) {
                     var styles = skin.getAll(classes[i]);
-                    for (Object object : styles.entries()) {
+                    if (styles != null) for (Object object : styles.entries()) {
                         var entry = (Entry) object;
                         var variableName = abbreviations[i] + upperCaseFirstLetter(sanitizeVariableName((String) entry.key));
                         typeSpecBuilder.addField(classes[i], variableName, Modifier.PUBLIC, Modifier.STATIC);
                         methodSpecBuilder.addStatement("$L.$L = $L.get($S, $T.class)", className, variableName, resource.variableName, entry.key, classes[i]);
                     }
                 }
-
+                
                 subTypes.add(typeSpecBuilder.build());
             }
             else {
@@ -423,7 +423,7 @@ public class ListUpdater {
                         .initializer("new $N($Lf, $Lf)", rangeType, floats[0], floats[1])
                         .build();
                 typeSpecBuilder.addField(fieldSpec);
-    
+                
                 fieldSpec = FieldSpec.builder(Float.TYPE, sanitizeVariableName(value.name), Modifier.PUBLIC, Modifier.STATIC)
                         .initializer("$Lf", floats[2])
                         .build();
