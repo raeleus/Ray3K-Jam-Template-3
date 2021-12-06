@@ -202,6 +202,78 @@ public class Utils {
         return vector2.angleDeg();
     }
     
+    private static final Vector2 temp1 = new Vector2();
+    private static final Vector2 temp2 = new Vector2();
+    public static float angleToHitMovingTarget(float projectileX, float projectileY, float projectileSpeed, float enemyX, float enemyY, float enemyDeltaX, float enemyDeltaY) {
+        temp1.set(enemyX, enemyY);
+        temp1.sub(projectileX, projectileY);
+        
+        temp2.set(enemyDeltaX, enemyDeltaY);
+        float a = temp2.dot(enemyDeltaX, enemyDeltaY) - projectileSpeed * projectileSpeed;
+        temp2.set(enemyDeltaX, enemyDeltaY);
+        float b = 2 * temp2.dot(temp1);
+        temp2.set(temp1);
+        float c = temp2.dot(temp1);
+        
+        float p = -b / 2 * a;
+        float q = (float) Math.sqrt((b * b) - 4 * a * c) / (2 * a);
+        
+        float t1 = p - q;
+        float t2 = p + q;
+        float t;
+        
+        if (t1 > t2 && t2 > 0)
+        {
+            t = t2;
+        }
+        else
+        {
+            t = t1;
+        }
+        
+        temp1.set(enemyX, enemyY);
+        temp2.set(enemyDeltaX, enemyDeltaY);
+        temp2.scl(t);
+        temp1.add(temp2);
+        temp1.sub(projectileX, projectileY);
+        return temp1.angleDeg();
+    }
+    
+    public static Vector2 positionToHitMovingTarget(float projectileX, float projectileY, float projectileSpeed, float enemyX, float enemyY, float enemyDeltaX, float enemyDeltaY, Vector2 result) {
+        temp1.set(enemyX, enemyY);
+        temp1.sub(projectileX, projectileY);
+        
+        temp2.set(enemyDeltaX, enemyDeltaY);
+        float a = temp2.dot(enemyDeltaX, enemyDeltaY) - projectileSpeed * projectileSpeed;
+        temp2.set(enemyDeltaX, enemyDeltaY);
+        float b = 2 * temp2.dot(temp1);
+        temp2.set(temp1);
+        float c = temp2.dot(temp1);
+        
+        float p = -b / 2 * a;
+        float q = (float) Math.sqrt((b * b) - 4 * a * c) / (2 * a);
+        
+        float t1 = p - q;
+        float t2 = p + q;
+        float t;
+        
+        if (t1 > t2 && t2 > 0)
+        {
+            t = t2;
+        }
+        else
+        {
+            t = t1;
+        }
+        
+        temp1.set(enemyX, enemyY);
+        temp2.set(enemyDeltaX, enemyDeltaY);
+        temp2.scl(t);
+        temp1.add(temp2);
+        result.set(temp1);
+        return result;
+    }
+    
     public static float approach(float start, float target, float increment) {
         increment = Math.abs(increment);
         if (start < target) {
@@ -250,13 +322,13 @@ public class Utils {
         
         rectToBoundingBox(rectangle.x, rectangle.y, 0, rectangle.height, bboxTemp);
         if (Intersector.intersectRayBounds(rayTemp, bboxTemp, intersection)) return true;
-    
+        
         rectToBoundingBox(rectangle.x, rectangle.y + rectangle.height, rectangle.width, 0, bboxTemp);
         if (Intersector.intersectRayBounds(rayTemp, bboxTemp, intersection)) return true;
-    
+        
         rectToBoundingBox(rectangle.x + rectangle.width, rectangle.y, 0, rectangle.height, bboxTemp);
         if (Intersector.intersectRayBounds(rayTemp, bboxTemp, intersection)) return true;
-    
+        
         rectToBoundingBox(rectangle.x, rectangle.y, rectangle.width, 0, bboxTemp);
         if (Intersector.intersectRayBounds(rayTemp, bboxTemp, intersection)) return true;
         
