@@ -165,11 +165,11 @@
 	}
 ],
 "events": {
-	"ahh": { "audio": "ahh.mp3" },
-	"libgdx": { "audio": "libgdx.mp3" },
-	"please don't kill me": { "audio": "please don't kill me.mp3" },
-	"please don't kill me2": { "audio": "please don't kill me.ogg" },
-	"shot": { "audio": "shot.mp3" }
+	"ahh": { "audio": "sfx/ahh.mp3" },
+	"libgdx": { "audio": "sfx/libgdx.mp3" },
+	"please don't kill me": { "audio": "sfx/please don't kill me.mp3" },
+	"please don't kill me2": { "audio": "sfx/please don't kill me.ogg" },
+	"shot": { "audio": "sfx/shot.mp3" }
 },
 "animations": {
 	"animation": {

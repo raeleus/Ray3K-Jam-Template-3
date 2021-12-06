@@ -29,8 +29,8 @@
 	}
 ],
 "events": {
-	"swoosh": { "audio": "swoosh.mp3" },
-	"tv": { "audio": "tv.mp3" }
+	"swoosh": { "audio": "sfx/swoosh.mp3" },
+	"tv": { "audio": "sfx/tv.mp3" }
 },
 "animations": {
 	"animation": {
