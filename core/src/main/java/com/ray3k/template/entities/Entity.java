@@ -1,6 +1,7 @@
 package com.ray3k.template.entities;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.dongbat.jbump.CollisionFilter;
 import com.dongbat.jbump.Collisions;
@@ -21,6 +22,10 @@ public abstract class Entity {
     public CollisionFilter collisionFilter;
     public float x;
     public float y;
+    public float moveTargetX;
+    public float moveTargetY;
+    public float moveTargetSpeed;
+    public boolean moveTargetActivated;
     public float bboxX;
     public float bboxY;
     public float bboxWidth;
@@ -67,9 +72,31 @@ public abstract class Entity {
     }
     
     public void moveTowards(float speed, float x, float y, float delta) {
-        temp1.set(x, y);
-        temp1.sub(this.x, this.y);
-        setMotion(Math.min(speed, temp1.len() / delta), temp1.angleDeg());
+        if (MathUtils.isEqual(this.x, x)) this.x = x;
+        if (MathUtils.isEqual(this.y, y)) this.y = y;
+        
+        if (MathUtils.isEqual(this.x, x) && MathUtils.isEqual(this.y, y)) {
+            deltaX = 0;
+            deltaY = 0;
+        } else {
+            temp1.set(x, y);
+            temp1.sub(this.x, this.y);
+            setMotion(Math.min(speed, temp1.len() / delta), temp1.angleDeg());
+        }
+    }
+    
+    public boolean moveTowardsTarget(float speed, float targetX, float targetY) {
+        moveTargetSpeed = speed;
+        moveTargetX = targetX;
+        moveTargetY = targetY;
+        
+        moveTargetActivated = !MathUtils.isEqual(x, moveTargetX) || !MathUtils.isEqual(y, moveTargetY);
+        if (!moveTargetActivated) setSpeed(0);
+        return moveTargetActivated;
+    }
+    
+    public void moveTowardsTarget(boolean activated) {
+        moveTargetActivated = activated;
     }
     
     public void setPosition(float x, float y) {
@@ -177,8 +204,7 @@ public abstract class Entity {
                 if (verts[i+1] > maxY) maxY = verts[i+1];
             }
         }
-        
-        setCollisionBox(minX, minY, maxX - minX, maxY - minY, collisionFilter);
+        setCollisionBox(minX - x, minY - y, maxX - minX, maxY - minY, collisionFilter);
     }
     
     public boolean isOutside(float left, float bottom, float width, float height, float border) {
