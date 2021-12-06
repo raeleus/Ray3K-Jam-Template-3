@@ -20,7 +20,9 @@ public class DialogDebug extends Dialog {
             var scrollPane = new ScrollPane(table, Core.skin);
             scrollPane.setName("scrollPane");
             scrollPane.setFadeScrollBars(false);
+            scrollPane.setFlickScroll(false);
             getContentTable().add(scrollPane);
+            getContentTable().layout();
         }
     }
     
