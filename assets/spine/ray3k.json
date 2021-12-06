@@ -1,5 +1,5 @@
 {
-"skeleton": { "hash": "LEUsTJ8ZDoZ2EvFmefshdoom4RQ", "spine": "3.8.99", "width": 1024, "height": 576, "images": "../output/", "audio": "../output/" },
+"skeleton": { "hash": "3HJRJLzd49I", "spine": "4.0.52", "width": 1024, "height": 576, "images": "", "audio": "../output/" },
 "bones": [
 	{ "name": "root", "x": 512, "y": 288 },
 	{ "name": "ray3k-logo", "parent": "root", "length": 196.01, "x": 119.05 },
