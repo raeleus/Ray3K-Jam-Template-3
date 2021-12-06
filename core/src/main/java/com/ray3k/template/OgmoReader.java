@@ -110,9 +110,17 @@ public class OgmoReader {
                     String folder = child.getString("folder");
                     for (JsonValue decal : child.get("decals").iterator()) {
                         for (OgmoListener ogmoListener : ogmoListeners) {
+                            valuesMap = new ObjectMap<>();
+                            if (decal.has("values")) for (JsonValue value : decal.get("values")) {
+                                OgmoValue ogmoValue = new OgmoValue();
+                                ogmoValue.name = value.name;
+                                ogmoValue.value = value.asString();
+                                valuesMap.put(value.name, ogmoValue);
+                            }
+                            
                             ogmoListener.decal(decal.getInt("x"), levelHeight - decal.getInt("y"),
                                     decal.getFloat("scaleX", 1f), decal.getFloat("scaleY", 1f),
-                                    (360 - decal.getInt("rotation", 0)) % 360, decal.getString("texture"), folder);
+                                    (360 - decal.getInt("rotation", 0)) % 360, decal.getString("texture"), folder, valuesMap);
                         }
                     }
                 } else if (child.has("data")) {
@@ -278,7 +286,7 @@ public class OgmoReader {
          * @param texture The name of the texture linked by the decal.
          * @param folder The name of the folder that the decal layer is linked to.
          */
-        void decal(int centerX, int centerY, float scaleX, float scaleY, int rotation, String texture, String folder);
+        void decal(int centerX, int centerY, float scaleX, float scaleY, int rotation, String texture, String folder, ObjectMap<String, OgmoValue> valuesMap);
         
         /**
          * Called for every tile placed in a tile layer when the layer uses id's.
@@ -392,7 +400,7 @@ public class OgmoReader {
          * @param folder   The name of the folder that the decal layer is linked to.
          */
         @Override
-        public void decal(int centerX, int centerY, float scaleX, float scaleY, int rotation, String texture, String folder) {
+        public void decal(int centerX, int centerY, float scaleX, float scaleY, int rotation, String texture, String folder, ObjectMap<String, OgmoValue> valuesMap) {
         
         }
         
