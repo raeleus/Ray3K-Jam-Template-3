@@ -61,11 +61,11 @@ public class ListUpdater {
                 
                 var resources = new Array<ResourceDescriptor>();
                 
-                boolean updated = createList("textures", "atlas", Paths.get("assets/textures.txt").toFile(), TextureAtlas.class, resources);
-                updated |= createList("spine", "json", Paths.get("assets/spine.txt").toFile(), SkeletonData.class, resources);
-                updated |= createList("skin", "json", Paths.get("assets/skin.txt").toFile(), Skin.class, resources);
-                updated |= createList("sfx", "mp3", Paths.get("assets/sfx.txt").toFile(), Sound.class, resources);
-                updated |= createList("bgm", "ogg", Paths.get("assets/bgm.txt").toFile(), Music.class, resources);
+                boolean updated = createList("textures", Paths.get("assets/textures.txt").toFile(), TextureAtlas.class, resources, "atlas");
+                updated |= createList("spine", Paths.get("assets/spine.txt").toFile(), SkeletonData.class, resources, "json");
+                updated |= createList("skin", Paths.get("assets/skin.txt").toFile(), Skin.class, resources, "json");
+                updated |= createList("sfx", Paths.get("assets/sfx.txt").toFile(), Sound.class, resources, "ogg", "mp3", "wav");
+                updated |= createList("bgm", Paths.get("assets/bgm.txt").toFile(), Music.class, resources, "ogg", "mp3", "wav");
                 
                 writeResources(resources, Paths.get("core/src/main/java/com/ray3k/template/Resources.java").toFile(), new FileHandle(Paths.get("assets/data").toFile()));
                 
@@ -79,7 +79,7 @@ public class ListUpdater {
         }, new Lwjgl3ApplicationConfiguration());
     }
     
-    private static boolean createList(String folderName, String extension, File outputPath, Class type, Array<ResourceDescriptor> resources) {
+    private static boolean createList(String folderName, File outputPath, Class type, Array<ResourceDescriptor> resources, String... extensions) {
         boolean changed = false;
         try {
             MessageDigest md5Digest = MessageDigest.getInstance("MD5");
@@ -87,7 +87,7 @@ public class ListUpdater {
             Array<FileHandle> files = new Array<>();
             
             File directory = new File("./assets/" + folderName + "/");
-            files.addAll(createList(directory, extension));
+            files.addAll(createList(directory, extensions));
             
             String outputText = "";
             for (int i = 0; i < files.size; i++) {
@@ -111,16 +111,18 @@ public class ListUpdater {
         return changed;
     }
     
-    private static Array<FileHandle> createList(File folder, String extension) {
+    private static Array<FileHandle> createList(File folder, String... extensions) {
         Array<FileHandle> files = new Array<>();
         
         if (folder.listFiles() != null) for (File file : folder.listFiles()) {
             if (file.isFile()) {
-                if (file.getPath().toLowerCase().endsWith(extension.toLowerCase())) {
-                    files.add(new FileHandle(file));
+                for (var extension : extensions) {
+                    if (file.getPath().toLowerCase().endsWith(extension.toLowerCase())) {
+                        files.add(new FileHandle(file));
+                    }
                 }
             } else {
-                files.addAll(createList(file, extension));
+                files.addAll(createList(file, extensions));
             }
         }
         return files;
