@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.ShortArray;
 import com.esotericsoftware.spine.SkeletonBounds;
 import com.esotericsoftware.spine.attachments.BoundingBoxAttachment;
 import com.ray3k.template.JamScreen.*;
+import com.ray3k.template.entities.*;
 import regexodus.Matcher;
 import regexodus.Pattern;
 
@@ -194,6 +195,10 @@ public class Utils {
     public static float pointDistance(float x1, float y1, float x2, float y2) {
         vector2.set(x1, y1);
         return vector2.dst(x2, y2);
+    }
+    
+    public static float pointDistance(Entity entity, Entity other) {
+        return pointDistance(entity.x, entity.y, other.x, other.y);
     }
     
     public static float pointDirection(float x1, float y1, float x2, float y2) {
