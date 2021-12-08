@@ -84,7 +84,7 @@ public class DialogPause extends Dialog {
         super.act(delta);
         
         if (detectInput) {
-            if (jamScreen.isAnyBindingPressed()) {
+            if (isAnyBindingPressed()) {
                 fire(new ResumeEvent());
                 hide();
                 detectInput = false;

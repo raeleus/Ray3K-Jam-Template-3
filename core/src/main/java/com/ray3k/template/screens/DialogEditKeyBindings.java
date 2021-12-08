@@ -6,7 +6,6 @@ import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -17,8 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectIntMap.Entry;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.ray3k.template.*;
-import com.ray3k.template.JamScreen.*;
 
 import static com.ray3k.template.Core.*;
 
@@ -133,7 +130,7 @@ public class DialogEditKeyBindings extends Dialog {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 core.setDefaultBindings();
-                JamScreen.saveBindings();
+                saveBindings();
                 refreshTable(table);
             }
         });
@@ -146,8 +143,8 @@ public class DialogEditKeyBindings extends Dialog {
         if (getStage() != null) getStage().setKeyboardFocus(null);
         
         table.defaults().space(10).uniform().fill();
-        for (Binding binding : JamScreen.getBindings()) {
-            String codeName = JamScreen.getBindingCodeName(binding);
+        for (Binding binding : getBindings()) {
+            String codeName = getBindingCodeName(binding);
             
             TextButton textButton = new TextButton(binding.toString() + " : " + codeName, skin);
             table.add(textButton);
@@ -163,58 +160,58 @@ public class DialogEditKeyBindings extends Dialog {
                         @Override
                         public void keySelected(int key) {
                             Array<Binding> unbinds = new Array<>();
-                            for (Entry<Binding> binding : JamScreen.keyBindings) {
+                            for (Entry<Binding> binding : keyBindings) {
                                 if (binding.value == key) {
                                     unbinds.add(binding.key);
                                 }
                             }
                             for (Binding binding : unbinds) {
-                                JamScreen.addUnboundBinding(binding);
+                                addUnboundBinding(binding);
                             }
                             
-                            JamScreen.addKeyBinding(binding, key);
-                            JamScreen.saveBindings();
+                            addKeyBinding(binding, key);
+                            saveBindings();
                             refreshTable(table);
                         }
     
                         @Override
                         public void buttonSelected(int button) {
                             Array<Binding> unbinds = new Array<>();
-                            for (Entry<Binding> binding : JamScreen.buttonBindings) {
+                            for (Entry<Binding> binding : buttonBindings) {
                                 if (binding.value == button) {
                                     unbinds.add(binding.key);
                                 }
                             }
                             for (Binding binding : unbinds) {
-                                JamScreen.addUnboundBinding(binding);
+                                addUnboundBinding(binding);
                             }
                             
-                            JamScreen.addButtonBinding(binding, button);
-                            JamScreen.saveBindings();
+                            addButtonBinding(binding, button);
+                            saveBindings();
                             refreshTable(table);
                         }
     
                         @Override
                         public void scrollSelected(int scroll) {
                             Array<Binding> unbinds = new Array<>();
-                            for (Entry<Binding> binding : JamScreen.scrollBindings) {
+                            for (Entry<Binding> binding : scrollBindings) {
                                 if (binding.value == scroll) {
                                     unbinds.add(binding.key);
                                 }
                             }
                             for (Binding binding : unbinds) {
-                                JamScreen.addUnboundBinding(binding);
+                                addUnboundBinding(binding);
                             }
                             
-                            JamScreen.addScrollBinding(binding, scroll);
-                            JamScreen.saveBindings();
+                            addScrollBinding(binding, scroll);
+                            saveBindings();
                             refreshTable(table);
                         }
     
                         @Override
                         public void controllerButtonSelected(Controller controller, int value) {
                             Array<Binding> unbinds = new Array<>();
-                            for (ObjectMap.Entry<Binding, ControllerValue> binding : JamScreen.controllerButtonBindings) {
+                            for (ObjectMap.Entry<Binding, ControllerValue> binding : controllerButtonBindings) {
                                 int bindingControllerIndex = Controllers.getControllers().indexOf(binding.value.controller, true);
                                 int controllerIndex = Controllers.getControllers().indexOf(controller, true);
                                 
@@ -223,18 +220,18 @@ public class DialogEditKeyBindings extends Dialog {
                                 }
                             }
                             for (Binding binding : unbinds) {
-                                JamScreen.addUnboundBinding(binding);
+                                addUnboundBinding(binding);
                             }
     
-                            JamScreen.addControllerButtonBinding(binding, new ControllerValue(controller, 0, value));
-                            JamScreen.saveBindings();
+                            addControllerButtonBinding(binding, new ControllerValue(controller, 0, value));
+                            saveBindings();
                             refreshTable(table);
                         }
     
                         @Override
                         public void controllerAxisSelected(Controller controller, int axisCode, int value) {
                             Array<Binding> unbinds = new Array<>();
-                            for (ObjectMap.Entry<Binding, ControllerValue> binding : JamScreen.controllerAxisBindings) {
+                            for (ObjectMap.Entry<Binding, ControllerValue> binding : controllerAxisBindings) {
                                 int bindingControllerIndex = Controllers.getControllers().indexOf(binding.value.controller, true);
                                 int controllerIndex = Controllers.getControllers().indexOf(controller, true);
                                 
@@ -243,11 +240,11 @@ public class DialogEditKeyBindings extends Dialog {
                                 }
                             }
                             for (Binding binding : unbinds) {
-                                JamScreen.addUnboundBinding(binding);
+                                addUnboundBinding(binding);
                             }
         
-                            JamScreen.addControllerAxisBinding(binding, new ControllerValue(controller, axisCode, value));
-                            JamScreen.saveBindings();
+                            addControllerAxisBinding(binding, new ControllerValue(controller, axisCode, value));
+                            saveBindings();
                             refreshTable(table);
                         }
     

@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ShortArray;
 import com.esotericsoftware.spine.SkeletonBounds;
 import com.esotericsoftware.spine.attachments.BoundingBoxAttachment;
-import com.ray3k.template.JamScreen.*;
+import com.ray3k.template.Core.*;
 import com.ray3k.template.entities.*;
 import regexodus.Matcher;
 import regexodus.Pattern;
@@ -185,11 +185,11 @@ public class Utils {
     }
     
     public static String controllerButtonToString(ControllerValue controllerValue) {
-        return controllerValue == JamScreen.ANY_CONTROLLER_BUTTON ? "ANY CONTROLLER BUTTON" : "Pad" + (controllerValue.controller == null ? "?" : Controllers.getControllers().indexOf(controllerValue.controller, true)) + " Button " + controllerValue.value;
+        return controllerValue == Core.ANY_CONTROLLER_BUTTON ? "ANY CONTROLLER BUTTON" : "Pad" + (controllerValue.controller == null ? "?" : Controllers.getControllers().indexOf(controllerValue.controller, true)) + " Button " + controllerValue.value;
     }
     
     public static String controllerAxisToString(ControllerValue controllerValue) {
-        return controllerValue == JamScreen.ANY_CONTROLLER_AXIS ? "ANY CONTROLLER AXIS" : "Pad" + (controllerValue.controller == null ? "?" : Controllers.getControllers().indexOf(controllerValue.controller, true)) + " Axis " + controllerValue.axisCode + " " + controllerValue.value;
+        return controllerValue == Core.ANY_CONTROLLER_AXIS ? "ANY CONTROLLER AXIS" : "Pad" + (controllerValue.controller == null ? "?" : Controllers.getControllers().indexOf(controllerValue.controller, true)) + " Axis " + controllerValue.axisCode + " " + controllerValue.value;
     }
     
     public static float distanceBetween(Entity entity, Entity other) {
