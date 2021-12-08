@@ -173,4 +173,14 @@ public class GameScreen extends JamScreen {
         vfxEffect.dispose();
         entityController.dispose();
     }
+    
+    @Override
+    public void pause() {
+    
+    }
+    
+    @Override
+    public void resume() {
+    
+    }
 }

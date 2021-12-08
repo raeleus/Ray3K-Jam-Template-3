@@ -66,4 +66,14 @@ public class SplashScreen extends JamScreen {
     public void dispose() {
         stage.dispose();
     }
+    
+    @Override
+    public void pause() {
+    
+    }
+    
+    @Override
+    public void resume() {
+    
+    }
 }

@@ -115,4 +115,19 @@ public class LibgdxScreen extends JamScreen {
             sound.stop();
         }
     }
+    
+    @Override
+    public void pause() {
+    
+    }
+    
+    @Override
+    public void resume() {
+    
+    }
+    
+    @Override
+    public void dispose() {
+    
+    }
 }

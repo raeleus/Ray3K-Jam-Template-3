@@ -116,4 +116,19 @@ public class LogoScreen extends JamScreen {
             sound.stop();
         }
     }
+    
+    @Override
+    public void pause() {
+    
+    }
+    
+    @Override
+    public void resume() {
+    
+    }
+    
+    @Override
+    public void dispose() {
+    
+    }
 }

@@ -13,14 +13,12 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import static com.ray3k.template.Core.*;
 
-public abstract class JamScreen extends ScreenAdapter implements InputProcessor, ControllerListener {
+public abstract class JamScreen implements InputProcessor, ControllerListener {
     public Viewport viewport;
     public OrthographicCamera camera;
     private static final Vector3 tempVector3 = new Vector3();
     
-    @Override
     public void show() {
-        super.show();
         Controllers.addListener(this);
     
         for (Controller controller : Controllers.getControllers()) {
@@ -28,17 +26,9 @@ public abstract class JamScreen extends ScreenAdapter implements InputProcessor,
         }
     }
     
-    @Override
     public void hide() {
-        super.hide();
         Controllers.removeListener(this);
         clearControllerHandlers();
-    }
-    
-    @Override
-    @Deprecated
-    public void render(float delta) {
-    
     }
     
     public void updateMouse() {
@@ -67,6 +57,14 @@ public abstract class JamScreen extends ScreenAdapter implements InputProcessor,
     public abstract void act(float delta);
     
     public abstract void draw(float delta);
+    
+    public abstract void pause();
+    
+    public abstract void resume();
+    
+    public abstract void resize(int width, int height);
+    
+    public abstract void dispose();
     
     @Override
     public boolean keyDown(int keycode) {

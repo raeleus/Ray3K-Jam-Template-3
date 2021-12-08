@@ -111,4 +111,19 @@ public class LoadScreen extends JamScreen {
         progressBar.setAnimateDuration(.5f);
         root.add(progressBar).growX();
     }
+    
+    @Override
+    public void pause() {
+    
+    }
+    
+    @Override
+    public void resume() {
+    
+    }
+    
+    @Override
+    public void dispose() {
+    
+    }
 }

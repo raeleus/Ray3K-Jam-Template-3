@@ -1,7 +1,8 @@
 package com.ray3k.template;
 
-import com.badlogic.gdx.Game;
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -15,7 +16,9 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import static com.ray3k.template.transitions.Transitions.*;
 
-public abstract class JamGame extends Game {
+public abstract class JamGame implements ApplicationListener {
+    protected JamScreen screen;
+    
     private final static long MS_PER_UPDATE = 10;
     private static final int MAX_VERTEX_SIZE = 32767;
     private long previous;
@@ -62,9 +65,9 @@ public abstract class JamGame extends Game {
                 float delta = MS_PER_UPDATE / 1000.0f;
                 
                 if (!transitionEngine.inTransition) {
-                    ((JamScreen) screen).updateMouse();
-                    ((JamScreen) screen).act(delta);
-                    ((JamScreen) screen).clearStates();
+                    screen.updateMouse();
+                    screen.act(delta);
+                    screen.clearStates();
                 } else {
                     transitionEngine.update(delta);
                 }
@@ -81,8 +84,18 @@ public abstract class JamGame extends Game {
     }
     
     @Override
+    public void pause() {
+        if (screen != null) screen.pause();
+    }
+    
+    @Override
+    public void resume() {
+        if (screen != null) screen.resume();
+    }
+    
+    @Override
     public void dispose() {
-        super.dispose();
+        if (screen != null) screen.hide();
     
         batch.dispose();
         vfxManager.dispose();
@@ -93,7 +106,7 @@ public abstract class JamGame extends Game {
     
     @Override
     public void resize(int width, int height) {
-        super.resize(width, height);
+        if (screen != null) screen.resize(width, height);
         
         if (width != 0 && height != 0) transitionEngine.resize(width, height);
     }
@@ -106,5 +119,19 @@ public abstract class JamGame extends Game {
     
     public void transition(JamScreen nextScreen) {
         transition(nextScreen, defaultTransition, defaultTransitionDuration);
+    }
+    
+    public void setScreen (JamScreen screen) {
+        if (this.screen != null) this.screen.hide();
+        this.screen = screen;
+        if (this.screen != null) {
+            this.screen.show();
+            this.screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
+    }
+    
+    /** @return the currently active {@link JamScreen}. */
+    public JamScreen getScreen () {
+        return screen;
     }
 }
