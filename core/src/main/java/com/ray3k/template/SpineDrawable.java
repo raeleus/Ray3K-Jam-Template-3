@@ -32,6 +32,7 @@ public class SpineDrawable extends SkeletonDrawable {
     @Override
     public void draw(Batch batch, float x, float y, float width, float height) {
         getSkeleton().setScale(width / cropWidth, height / cropHeight);
+        getSkeleton().setColor(batch.getColor());
         super.draw(batch, x - cropX, y - cropY, width, height);
     }
 }
