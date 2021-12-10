@@ -193,14 +193,14 @@ public class Utils {
     }
     
     public static float distanceBetween(Entity entity, Entity other) {
-        var right = entity.getCollisionBoxRight();
-        var left = entity.getCollisionBoxLeft();
-        var top = entity.getCollisionBoxTop();
-        var bottom = entity.getCollisionBoxBottom();
-        var otherRight = entity.getCollisionBoxRight();
-        var otherLeft = entity.getCollisionBoxLeft();
-        var otherTop = entity.getCollisionBoxTop();
-        var otherBottom = entity.getCollisionBoxBottom();
+        var right = entity.getBboxRight();
+        var left = entity.getBboxLeft();
+        var top = entity.getBboxTop();
+        var bottom = entity.getBboxBottom();
+        var otherRight = entity.getBboxRight();
+        var otherLeft = entity.getBboxLeft();
+        var otherTop = entity.getBboxTop();
+        var otherBottom = entity.getBboxBottom();
         vector2.set(right < otherLeft ? right : left, top < otherBottom ? top : bottom);
         return vector2.dst(right < otherLeft ? otherLeft : otherRight, top < otherBottom ? otherBottom : otherTop);
     }

@@ -35,9 +35,11 @@ public abstract class Entity {
     public boolean destroy;
     public float gravityX;
     public float gravityY;
-    public boolean visible;
+    public boolean visible = true;
     public float depth;
     public Color collisionBoxDebugColor;
+    public boolean sleepable = true;
+    public boolean sleeping;
     
     public abstract void create();
     public abstract void actBefore(float delta);
@@ -46,10 +48,6 @@ public abstract class Entity {
     public abstract void destroy();
     public abstract void projectedCollision(Result result);
     public abstract void collision(Collisions collisions);
-    
-    public Entity() {
-        visible = true;
-    }
     
     public void setMotion(float speed, float direction) {
         temp1.set(speed, 0);
@@ -207,47 +205,67 @@ public abstract class Entity {
         setCollisionBox(minX - x, minY - y, maxX - minX, maxY - minY, collisionFilter);
     }
     
-    public boolean isOutside(float left, float bottom, float width, float height, float border) {
-        return x < left - border || x > left + width + border || y < bottom - border || y > bottom + height + border;
+    public boolean isOutside(float left, float bottom, float width, float height) {
+        return isOutside(left, bottom, width, height, 0);
     }
     
-    public float getCollisionBoxLeft() {
+    public boolean isInside(float left, float bottom, float width, float height, float border) {
+        return !isOutside(left, bottom, width, height, border);
+    }
+    
+    public boolean isInside(float left, float bottom, float width, float height) {
+        return !isOutside(left, bottom, width, height);
+    }
+    
+    public boolean isOutside(float left, float bottom, float width, float height, float border) {
+        return getBboxRight() < left - border || getBboxLeft() > left + width + border || getBboxTop() < bottom - border || getBboxBottom() > bottom + height + border;
+    }
+    
+    public float getBboxLeft() {
         return x + bboxX;
     }
     
-    public float getCollisionBoxRight() {
+    public float getBboxRight() {
         return x + bboxX + bboxWidth;
     }
     
-    public float getCollisionBoxBottom() {
+    public float getBboxBottom() {
         return y + bboxY;
     }
     
-    public float getCollisionBoxTop() {
+    public float getBboxTop() {
         return y + bboxY + bboxHeight;
     }
     
-    public float getCollisionBoxCenterX() {
+    public float getBboxCenterX() {
         return x + bboxX + bboxWidth / 2;
     }
     
-    public float getCollisionBoxCenterY() {
+    public float getBboxCenterY() {
         return y + bboxY + bboxHeight / 2;
     }
     
-    public void setCollisionBoxLeft(float x) {
+    public void setBboxLeft(float x) {
         this.x = x - bboxX;
     }
     
-    public void setCollisionBoxRight(float x) {
+    public void setBboxRight(float x) {
         this.x = x - bboxX - bboxWidth;
     }
     
-    public void setCollisionBoxBottom(float y) {
+    public void setBboxBottom(float y) {
         this.y = y - bboxY;
     }
     
-    public void setCollisionBoxTop(float y) {
+    public void setBboxTop(float y) {
         this.y = y - bboxY - bboxHeight;
+    }
+    
+    public void setBboxCenterX(float x) {
+        this.x = x - bboxX - bboxWidth / 2;
+    }
+    
+    public void setBboxCenterY(float y) {
+        this.y = y - bboxY - bboxHeight / 2;
     }
 }
