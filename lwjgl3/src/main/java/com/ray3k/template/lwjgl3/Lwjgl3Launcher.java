@@ -33,7 +33,6 @@ public class Lwjgl3Launcher implements CrossPlatformWorker {
 	}
 	
 	@Override
-	@Override
 	public Table generateDebugTable() {
 		var table = new Table();
 		table.defaults().space(5);
