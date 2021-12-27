@@ -15,20 +15,11 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 import static com.ray3k.template.Core.*;
 
 public class BallTestEntity extends Entity {
-    private GameScreen gameScreen;
-    private Viewport viewport;
-    private OrthographicCamera camera;
-    private ShapeDrawer shapeDrawer;
     private final Color color = new Color();
     public boolean moveCamera;
     
     @Override
     public void create() {
-        gameScreen = GameScreen.gameScreen;
-        viewport = viewport;
-        camera = camera;
-        shapeDrawer = GameScreen.gameScreen.shapeDrawer;
-        
         color.set(Color.RED);
         
         setMotion(100, MathUtils.random(360f));

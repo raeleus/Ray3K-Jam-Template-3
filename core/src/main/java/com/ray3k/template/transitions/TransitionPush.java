@@ -25,7 +25,7 @@ public class TransitionPush implements Transition {
         this.toDirection = toDirection;
         this.backgroundColor = backgroundColor;
         this.interpolation = interpolation;
-        te = JamGame.transitionEngine;
+        te = Core.transitionEngine;
     }
     
     @Override

@@ -10,8 +10,6 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.ray3k.template.*;
 
-import static com.ray3k.template.JamGame.*;
-
 public class TransitionWipe implements Transition {
     private TransitionEngine te;
     private float toDirection;
@@ -22,7 +20,7 @@ public class TransitionWipe implements Transition {
     public TransitionWipe(float toDirection, Interpolation interpolation) {
         this.toDirection = toDirection;
         this.interpolation = interpolation;
-        te = JamGame.transitionEngine;
+        te = Core.transitionEngine;
         polygon = new Polygon();
     }
     
@@ -71,12 +69,12 @@ public class TransitionWipe implements Transition {
         Gdx.gl.glDepthMask(true);
         Gdx.gl.glColorMask(false, false, false, false);
         
-        shapeRenderer.begin(ShapeType.Filled);
-        shapeRenderer.setProjectionMatrix(te.viewport.getCamera().combined);
+        Core.shapeRenderer.begin(ShapeType.Filled);
+        Core.shapeRenderer.setProjectionMatrix(te.viewport.getCamera().combined);
         float[] points = polygon.getTransformedVertices();
-        shapeRenderer.triangle(points[0], points[1], points[2], points[3], points[4], points[5]);
-        shapeRenderer.triangle(points[4], points[5], points[6], points[7], points[0], points[1]);
-        shapeRenderer.end();
+        Core.shapeRenderer.triangle(points[0], points[1], points[2], points[3], points[4], points[5]);
+        Core.shapeRenderer.triangle(points[4], points[5], points[6], points[7], points[0], points[1]);
+        Core.shapeRenderer.end();
         
         batch.begin();
         Gdx.gl.glColorMask(true, true, true, true);

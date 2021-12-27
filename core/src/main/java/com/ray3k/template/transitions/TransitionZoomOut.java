@@ -13,7 +13,7 @@ public class TransitionZoomOut implements Transition {
     
     public TransitionZoomOut(Interpolation interpolation) {
         this.interpolation = interpolation;
-        te = JamGame.transitionEngine;
+        te = Core.transitionEngine;
     }
     
     @Override

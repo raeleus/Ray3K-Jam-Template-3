@@ -16,7 +16,6 @@ import com.rafaskoberg.gdx.typinglabel.TypingLabel;
 import com.ray3k.template.*;
 
 import static com.ray3k.template.Core.*;
-import static com.ray3k.template.JamGame.*;
 
 public class CreditsScreen extends JamScreen {
     private Stage stage;

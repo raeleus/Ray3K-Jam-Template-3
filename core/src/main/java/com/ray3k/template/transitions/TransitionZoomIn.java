@@ -13,7 +13,7 @@ public class TransitionZoomIn implements Transition {
     
     public TransitionZoomIn(Interpolation interpolation) {
         this.interpolation = interpolation;
-        te = JamGame.transitionEngine;
+        te = Core.transitionEngine;
     }
     
     @Override

@@ -14,7 +14,7 @@ public class TransitionColorFade implements Transition {
     public Interpolation interpolation;
     
     public TransitionColorFade(Color backgroundColor, Interpolation interpolation) {
-        te = JamGame.transitionEngine;
+        te = Core.transitionEngine;
         this.backgroundColor = backgroundColor;
         this.interpolation = interpolation;
     }

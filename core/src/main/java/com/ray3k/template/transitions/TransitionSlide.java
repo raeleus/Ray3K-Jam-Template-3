@@ -20,7 +20,7 @@ public class TransitionSlide implements Transition {
     public TransitionSlide(float toDirection, Interpolation interpolation) {
         this.toDirection = toDirection;
         this.interpolation = interpolation;
-        te = JamGame.transitionEngine;
+        te = Core.transitionEngine;
     }
     
     @Override

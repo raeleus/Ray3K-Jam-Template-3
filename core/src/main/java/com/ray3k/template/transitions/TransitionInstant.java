@@ -10,7 +10,7 @@ public class TransitionInstant implements Transition {
     private TransitionEngine te;
     
     public TransitionInstant() {
-        te = JamGame.transitionEngine;
+        te = Core.transitionEngine;
     }
     
     @Override

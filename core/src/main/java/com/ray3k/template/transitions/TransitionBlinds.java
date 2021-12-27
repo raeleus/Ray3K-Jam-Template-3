@@ -10,8 +10,6 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.ray3k.template.*;
 
-import static com.ray3k.template.JamGame.*;
-
 public class TransitionBlinds implements Transition {
     private TransitionEngine te;
     private float toDirection;
@@ -24,7 +22,7 @@ public class TransitionBlinds implements Transition {
         this.toDirection = toDirection;
         this.blindsNumber = blindsNumber;
         this.interpolation = interpolation;
-        te = JamGame.transitionEngine;
+        te = Core.transitionEngine;
         polygon = new Polygon();
     }
     
@@ -74,8 +72,8 @@ public class TransitionBlinds implements Transition {
         Gdx.gl.glDepthMask(true);
         Gdx.gl.glColorMask(false, false, false, false);
         
-        shapeRenderer.begin(ShapeType.Filled);
-        shapeRenderer.setProjectionMatrix(te.viewport.getCamera().combined);
+        Core.shapeRenderer.begin(ShapeType.Filled);
+        Core.shapeRenderer.setProjectionMatrix(te.viewport.getCamera().combined);
         vector2.set(distance / blindsNumber, 0);
         vector2.rotateDeg(toDirection);
         for (int i = 0; i < blindsNumber; i++) {
@@ -84,10 +82,10 @@ public class TransitionBlinds implements Transition {
                     distance * interpolation.apply((te.time + delta) / te.duration) / blindsNumber, distance,
                     toDirection, 0, distance / 2, polygon);
             float[] points = polygon.getTransformedVertices();
-            shapeRenderer.triangle(points[0], points[1], points[2], points[3], points[4], points[5]);
-            shapeRenderer.triangle(points[4], points[5], points[6], points[7], points[0], points[1]);
+            Core.shapeRenderer.triangle(points[0], points[1], points[2], points[3], points[4], points[5]);
+            Core.shapeRenderer.triangle(points[4], points[5], points[6], points[7], points[0], points[1]);
         }
-        shapeRenderer.end();
+        Core.shapeRenderer.end();
         
         batch.begin();
         Gdx.gl.glColorMask(true, true, true, true);

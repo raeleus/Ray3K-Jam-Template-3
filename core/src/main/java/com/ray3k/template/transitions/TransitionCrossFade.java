@@ -13,7 +13,7 @@ public class TransitionCrossFade implements Transition {
     
     public TransitionCrossFade(Interpolation interpolation) {
         this.interpolation = interpolation;
-        te = JamGame.transitionEngine;
+        te = Core.transitionEngine;
     }
     
     @Override

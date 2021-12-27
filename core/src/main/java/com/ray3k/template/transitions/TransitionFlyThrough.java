@@ -15,7 +15,7 @@ public class TransitionFlyThrough implements Transition {
     public TransitionFlyThrough(float scale, Interpolation interpolation) {
         this.scale = scale;
         this.interpolation = interpolation;
-        te = JamGame.transitionEngine;
+        te = Core.transitionEngine;
     }
     
     @Override
