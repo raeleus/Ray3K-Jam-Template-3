@@ -646,7 +646,6 @@ public class Core extends JamGame {
     @Override
     public void create() {
         super.create();
-        var file = Gdx.files.internal("spine/libgdx.json");
         core = this;
         
         preferences = Gdx.app.getPreferences(PROJECT_NAME);
