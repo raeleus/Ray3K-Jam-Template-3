@@ -1,6 +1,6 @@
 package com.ray3k.template.entities;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.dongbat.jbump.Collisions;
 import com.dongbat.jbump.Response.Result;
 import com.ray3k.template.*;
@@ -9,7 +9,7 @@ import com.ray3k.template.screens.*;
 import static com.ray3k.template.screens.GameScreen.*;
 
 public class DecalEntity extends Entity {
-    private AtlasSprite region;
+    private Sprite region;
     public boolean panning = true;
     
     public DecalEntity(AtlasSprite region, int centerX, int centerY) {
