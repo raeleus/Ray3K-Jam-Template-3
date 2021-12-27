@@ -33,6 +33,7 @@ public class Lwjgl3Launcher implements CrossPlatformWorker {
 	}
 	
 	@Override
+	@Override
 	public Table generateDebugTable() {
 		var table = new Table();
 		table.defaults().space(5);
@@ -52,7 +53,7 @@ public class Lwjgl3Launcher implements CrossPlatformWorker {
 						public void changed(ChangeEvent event, Actor actor) {
 							try {
 								var text = textField.getText();
-								field.set(null, text.length() == 0 ? 0 : Integer.parseInt(text));
+								field.set(null, text == null || text.equals("") || !text.matches("-?\\d+(\\.\\d+)?") ? 0 : Integer.parseInt(text));
 							} catch (IllegalAccessException e) {
 								e.printStackTrace();
 							}
@@ -102,7 +103,7 @@ public class Lwjgl3Launcher implements CrossPlatformWorker {
 						public void changed(ChangeEvent event, Actor actor) {
 							try {
 								var text = textField.getText();
-								field.set(null, text.length() == 0 ? 0 : Float.parseFloat(text));
+								field.set(null, text == null || text.equals("") || !text.matches("-?\\d+(\\.\\d+)?") ? 0 : Float.parseFloat(text));
 							} catch (IllegalAccessException e) {
 								e.printStackTrace();
 							}
