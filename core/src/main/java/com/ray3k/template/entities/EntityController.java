@@ -7,7 +7,6 @@ import com.dongbat.jbump.Rect;
 import java.util.Comparator;
 
 import static com.ray3k.template.Core.*;
-import static com.ray3k.template.JamGame.*;
 
 public class EntityController implements Disposable {
     public Array<Entity> entities;
@@ -75,7 +74,7 @@ public class EntityController implements Disposable {
     public void wake(Entity entity) {
         entity.sleeping = false;
         if (entity.item != null) {
-            world.add(entity.item, entity.x + entity.bboxX, entity.y + entity.bboxY, entity.bboxWidth, entity.bboxHeight);
+            world.add(entity.item, entity.x + entity.bboxOriginX, entity.y + entity.bboxOriginY, entity.bboxWidth, entity.bboxHeight);
         }
     }
     
@@ -120,7 +119,7 @@ public class EntityController implements Disposable {
             }
             
             if (entity.item != null && world.hasItem(entity.item)) {
-                var result = world.check(entity.item, entity.x + entity.bboxX, entity.y + entity.bboxY, entity.collisionFilter);
+                var result = world.check(entity.item, entity.x + entity.bboxOriginX, entity.y + entity.bboxOriginY, entity.collisionFilter);
                 entity.projectedCollision(result);
                 world.update(entity.item, result.goalX, result.goalY);
                 for (int i = 0; i < result.projectedCollisions.size(); i++) {
@@ -128,8 +127,8 @@ public class EntityController implements Disposable {
                     entity.collisions.add(collision);
                 }
                 Rect rect = world.getRect(entity.item);
-                entity.x = rect.x - entity.bboxX;
-                entity.y = rect.y - entity.bboxY;
+                entity.x = rect.x - entity.bboxOriginX;
+                entity.y = rect.y - entity.bboxOriginY;
             }
             
             entity.act(delta);

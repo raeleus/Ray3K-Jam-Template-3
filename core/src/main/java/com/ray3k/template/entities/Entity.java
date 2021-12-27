@@ -26,8 +26,8 @@ public abstract class Entity {
     public float moveTargetY;
     public float moveTargetSpeed;
     public boolean moveTargetActivated;
-    public float bboxX;
-    public float bboxY;
+    public float bboxOriginX;
+    public float bboxOriginY;
     public float bboxWidth;
     public float bboxHeight;
     public float deltaX;
@@ -170,8 +170,8 @@ public abstract class Entity {
     }
     
     public void setCollisionBox(float offsetX, float offsetY, float width, float height, CollisionFilter collisionFilter) {
-        bboxX = offsetX;
-        bboxY = offsetY;
+        bboxOriginX = offsetX;
+        bboxOriginY = offsetY;
         bboxWidth = width;
         bboxHeight = height;
         this.collisionFilter = collisionFilter;
@@ -180,9 +180,9 @@ public abstract class Entity {
         
         if (item == null) {
             item = new Item<>(this);
-            world.add(item, x + bboxX, y + bboxY, width, height);
+            world.add(item, x + bboxOriginX, y + bboxOriginY, width, height);
         } else {
-            world.update(item, x + bboxX, y + bboxY, width, height);
+            world.update(item, x + bboxOriginX, y + bboxOriginY, width, height);
         }
     }
     
@@ -222,50 +222,50 @@ public abstract class Entity {
     }
     
     public float getBboxLeft() {
-        return x + bboxX;
+        return x + bboxOriginX;
     }
     
     public float getBboxRight() {
-        return x + bboxX + bboxWidth;
+        return x + bboxOriginX + bboxWidth;
     }
     
     public float getBboxBottom() {
-        return y + bboxY;
+        return y + bboxOriginY;
     }
     
     public float getBboxTop() {
-        return y + bboxY + bboxHeight;
+        return y + bboxOriginY + bboxHeight;
     }
     
     public float getBboxCenterX() {
-        return x + bboxX + bboxWidth / 2;
+        return x + bboxOriginX + bboxWidth / 2;
     }
     
     public float getBboxCenterY() {
-        return y + bboxY + bboxHeight / 2;
+        return y + bboxOriginY + bboxHeight / 2;
     }
     
     public void setBboxLeft(float x) {
-        this.x = x - bboxX;
+        this.x = x - bboxOriginX;
     }
     
     public void setBboxRight(float x) {
-        this.x = x - bboxX - bboxWidth;
+        this.x = x - bboxOriginX - bboxWidth;
     }
     
     public void setBboxBottom(float y) {
-        this.y = y - bboxY;
+        this.y = y - bboxOriginY;
     }
     
     public void setBboxTop(float y) {
-        this.y = y - bboxY - bboxHeight;
+        this.y = y - bboxOriginY - bboxHeight;
     }
     
     public void setBboxCenterX(float x) {
-        this.x = x - bboxX - bboxWidth / 2;
+        this.x = x - bboxOriginX - bboxWidth / 2;
     }
     
     public void setBboxCenterY(float y) {
-        this.y = y - bboxY - bboxHeight / 2;
+        this.y = y - bboxOriginY - bboxHeight / 2;
     }
 }
