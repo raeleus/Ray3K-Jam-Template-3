@@ -2,20 +2,15 @@ package com.ray3k.template;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
 import static com.ray3k.template.Core.*;
 
 public abstract class JamScreen implements InputProcessor, ControllerListener {
-    public Viewport viewport;
-    public OrthographicCamera camera;
     private static final Vector3 tempVector3 = new Vector3();
     
     public void show() {

@@ -25,8 +25,8 @@ public class BallTestEntity extends Entity {
     @Override
     public void create() {
         gameScreen = GameScreen.gameScreen;
-        viewport = gameScreen.viewport;
-        camera = gameScreen.camera;
+        viewport = viewport;
+        camera = camera;
         shapeDrawer = GameScreen.gameScreen.shapeDrawer;
         
         color.set(Color.RED);

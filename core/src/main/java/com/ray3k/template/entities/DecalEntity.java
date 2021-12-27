@@ -4,15 +4,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.dongbat.jbump.Collisions;
 import com.dongbat.jbump.Response.Result;
 import com.ray3k.template.*;
-import com.ray3k.template.screens.*;
 
-import static com.ray3k.template.screens.GameScreen.*;
+import static com.ray3k.template.Core.*;
 
 public class DecalEntity extends Entity {
     private Sprite region;
     public boolean panning = true;
     
-    public DecalEntity(AtlasSprite region, int centerX, int centerY) {
+    public DecalEntity(Sprite region, int centerX, int centerY) {
         this.region = region;
         x = centerX - region.getWidth() / 2f;
         y = centerY - region.getHeight() / 2f;
@@ -37,13 +36,13 @@ public class DecalEntity extends Entity {
     public void draw(float delta) {
         if (panning) {
             region.setPosition(x, y);
-            region.draw(JamGame.batch);
+            region.draw(batch);
         } else {
-            var camera = gameScreen.camera;
-            var viewport = gameScreen.viewport;
+            var camera = Core.camera;
+            var viewport = Core.viewport;
             region.setPosition(camera.position.x - viewport.getWorldWidth() / 2 + x * camera.zoom, camera.position.y - viewport.getWorldHeight() / 2 + y * camera.zoom);
             region.setScale(camera.zoom);
-            region.draw(JamGame.batch);
+            region.draw(batch);
         }
     }
     
