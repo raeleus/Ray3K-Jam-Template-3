@@ -10,7 +10,7 @@ import static com.ray3k.template.screens.GameScreen.*;
 
 public class DecalEntity extends Entity {
     private AtlasSprite region;
-    public boolean panning;
+    public boolean panning = true;
     
     public DecalEntity(AtlasSprite region, int centerX, int centerY) {
         this.region = region;
