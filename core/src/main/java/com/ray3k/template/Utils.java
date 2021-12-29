@@ -17,7 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.ShortArray;
-import com.esotericsoftware.spine.SkeletonBounds;
+import com.esotericsoftware.spine.*;
 import com.esotericsoftware.spine.attachments.BoundingBoxAttachment;
 import com.ray3k.template.Core.*;
 import com.ray3k.template.entities.*;
@@ -392,5 +392,25 @@ public class Utils {
                 runnable.run();
             }
         });
+    }
+    
+    public static Bone findBone(Skeleton skeleton, BoneData boneData) {
+        if (boneData == null) throw new IllegalArgumentException("boneData cannot be null.");
+        Object[] bones = skeleton.getBones().items;
+        for (int i = 0, n = skeleton.getBones().size; i < n; i++) {
+            Bone bone = (Bone)bones[i];
+            if (bone.getData() == boneData) return bone;
+        }
+        return null;
+    }
+    
+    public static Slot findSlot(Skeleton skeleton, SlotData slotData) {
+        if (slotData == null) throw new IllegalArgumentException("slotData cannot be null.");
+        Object[] slots = skeleton.getSlots().items;
+        for (int i = 0, n = skeleton.getBones().size; i < n; i++) {
+            Slot slot = (Slot) slots[i];
+            if (slot.getData() == slotData) return slot;
+        }
+        return null;
     }
 }
