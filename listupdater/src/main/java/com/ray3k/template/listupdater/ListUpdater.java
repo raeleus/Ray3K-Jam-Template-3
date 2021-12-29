@@ -34,10 +34,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window.WindowStyle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.ObjectMap.Entry;
-import com.esotericsoftware.spine.Animation;
-import com.esotericsoftware.spine.AnimationStateData;
-import com.esotericsoftware.spine.SkeletonData;
-import com.esotericsoftware.spine.SkeletonJson;
+import com.esotericsoftware.spine.*;
 import com.esotericsoftware.spine.attachments.*;
 import com.ray3k.stripe.FreeTypeSkinLoader;
 import com.squareup.javapoet.*;
@@ -186,6 +183,27 @@ public class ListUpdater {
                     typeSpecBuilder.addField(Animation.class, variableName, Modifier.PUBLIC, Modifier.STATIC);
                     
                     methodSpecBuilder.addStatement("$L.$L = $L.skeletonData.findAnimation($S)", name, variableName, name, animation.getName());
+                }
+    
+                for (var event : skeletonData.getEvents()) {
+                    var variableName = "event" + upperCaseFirstLetter(sanitizeVariableName(event.getName()));
+                    typeSpecBuilder.addField(EventData.class, variableName, Modifier.PUBLIC, Modifier.STATIC);
+        
+                    methodSpecBuilder.addStatement("$L.$L = $L.skeletonData.findEvent($S)", name, variableName, name, event.getName());
+                }
+    
+                for (var bone : skeletonData.getBones()) {
+                    var variableName = "bone" + upperCaseFirstLetter(sanitizeVariableName(bone.getName()));
+                    typeSpecBuilder.addField(BoneData.class, variableName, Modifier.PUBLIC, Modifier.STATIC);
+        
+                    methodSpecBuilder.addStatement("$L.$L = $L.skeletonData.findBone($S)", name, variableName, name, bone.getName());
+                }
+    
+                for (var slot : skeletonData.getSlots()) {
+                    var variableName = "slot" + upperCaseFirstLetter(sanitizeVariableName(slot.getName()));
+                    typeSpecBuilder.addField(SlotData.class, variableName, Modifier.PUBLIC, Modifier.STATIC);
+        
+                    methodSpecBuilder.addStatement("$L.$L = $L.skeletonData.findSlot($S)", name, variableName, name, slot.getName());
                 }
                 
                 for (var skin : skeletonData.getSkins()) {

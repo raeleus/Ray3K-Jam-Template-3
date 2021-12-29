@@ -22,9 +22,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.esotericsoftware.spine.Animation;
-import com.esotericsoftware.spine.AnimationStateData;
-import com.esotericsoftware.spine.SkeletonData;
+import com.esotericsoftware.spine.*;
+
 import java.lang.String;
 
 public class Resources {
@@ -56,11 +55,68 @@ public class Resources {
         SpineLibgdx.animationData = assetManager.get("spine/libgdx.json-animation");
         SpineLibgdx.animationAnimation = SpineLibgdx.skeletonData.findAnimation("animation");
         SpineLibgdx.animationStand = SpineLibgdx.skeletonData.findAnimation("stand");
+        SpineLibgdx.eventAhh = SpineLibgdx.skeletonData.findEvent("ahh");
+        SpineLibgdx.eventLibgdx = SpineLibgdx.skeletonData.findEvent("libgdx");
+        SpineLibgdx.eventPleaseDontKillMe = SpineLibgdx.skeletonData.findEvent("please don't kill me");
+        SpineLibgdx.eventPleaseDontKillMe2 = SpineLibgdx.skeletonData.findEvent("please don't kill me2");
+        SpineLibgdx.eventShot = SpineLibgdx.skeletonData.findEvent("shot");
+        SpineLibgdx.boneRoot = SpineLibgdx.skeletonData.findBone("root");
+        SpineLibgdx.boneBlood0 = SpineLibgdx.skeletonData.findBone("blood-0");
+        SpineLibgdx.boneBlood1 = SpineLibgdx.skeletonData.findBone("blood-1");
+        SpineLibgdx.boneBlood2 = SpineLibgdx.skeletonData.findBone("blood-2");
+        SpineLibgdx.boneBlood3 = SpineLibgdx.skeletonData.findBone("blood-3");
+        SpineLibgdx.boneBlood4 = SpineLibgdx.skeletonData.findBone("blood-4");
+        SpineLibgdx.boneBlood5 = SpineLibgdx.skeletonData.findBone("blood-5");
+        SpineLibgdx.boneBlood6 = SpineLibgdx.skeletonData.findBone("blood-6");
+        SpineLibgdx.boneBlood7 = SpineLibgdx.skeletonData.findBone("blood-7");
+        SpineLibgdx.boneBlood8 = SpineLibgdx.skeletonData.findBone("blood-8");
+        SpineLibgdx.boneBlood9 = SpineLibgdx.skeletonData.findBone("blood-9");
+        SpineLibgdx.boneBlood10 = SpineLibgdx.skeletonData.findBone("blood-10");
+        SpineLibgdx.boneBlood11 = SpineLibgdx.skeletonData.findBone("blood-11");
+        SpineLibgdx.boneLibgdxL = SpineLibgdx.skeletonData.findBone("libgdx-l");
+        SpineLibgdx.boneLibgdxI = SpineLibgdx.skeletonData.findBone("libgdx-i");
+        SpineLibgdx.boneLibgdxB = SpineLibgdx.skeletonData.findBone("libgdx-b");
+        SpineLibgdx.boneLibgdxG = SpineLibgdx.skeletonData.findBone("libgdx-g");
+        SpineLibgdx.boneLibgdxD = SpineLibgdx.skeletonData.findBone("libgdx-d");
+        SpineLibgdx.boneLibgdxX = SpineLibgdx.skeletonData.findBone("libgdx-x");
+        SpineLibgdx.boneSpark0 = SpineLibgdx.skeletonData.findBone("spark-0");
+        SpineLibgdx.slotLibgdxReference = SpineLibgdx.skeletonData.findSlot("libgdx-reference");
+        SpineLibgdx.slotWhite = SpineLibgdx.skeletonData.findSlot("white");
+        SpineLibgdx.slotBlood0 = SpineLibgdx.skeletonData.findSlot("blood-0");
+        SpineLibgdx.slotBlood1 = SpineLibgdx.skeletonData.findSlot("blood-1");
+        SpineLibgdx.slotBlood2 = SpineLibgdx.skeletonData.findSlot("blood-2");
+        SpineLibgdx.slotBlood3 = SpineLibgdx.skeletonData.findSlot("blood-3");
+        SpineLibgdx.slotBlood4 = SpineLibgdx.skeletonData.findSlot("blood-4");
+        SpineLibgdx.slotBlood5 = SpineLibgdx.skeletonData.findSlot("blood-5");
+        SpineLibgdx.slotBlood6 = SpineLibgdx.skeletonData.findSlot("blood-6");
+        SpineLibgdx.slotBlood7 = SpineLibgdx.skeletonData.findSlot("blood-7");
+        SpineLibgdx.slotBlood8 = SpineLibgdx.skeletonData.findSlot("blood-8");
+        SpineLibgdx.slotBlood9 = SpineLibgdx.skeletonData.findSlot("blood-9");
+        SpineLibgdx.slotBlood10 = SpineLibgdx.skeletonData.findSlot("blood-10");
+        SpineLibgdx.slotBlood11 = SpineLibgdx.skeletonData.findSlot("blood-11");
+        SpineLibgdx.slotLibgdxL = SpineLibgdx.skeletonData.findSlot("libgdx-l");
+        SpineLibgdx.slotLibgdxI = SpineLibgdx.skeletonData.findSlot("libgdx-i");
+        SpineLibgdx.slotLibgdxB = SpineLibgdx.skeletonData.findSlot("libgdx-b");
+        SpineLibgdx.slotLibgdxG = SpineLibgdx.skeletonData.findSlot("libgdx-g");
+        SpineLibgdx.slotLibgdxD = SpineLibgdx.skeletonData.findSlot("libgdx-d");
+        SpineLibgdx.slotLibgdxX = SpineLibgdx.skeletonData.findSlot("libgdx-x");
+        SpineLibgdx.slotMouth = SpineLibgdx.skeletonData.findSlot("mouth");
+        SpineLibgdx.slotSpark0 = SpineLibgdx.skeletonData.findSlot("spark-0");
         SpineLibgdx.skinDefault = SpineLibgdx.skeletonData.findSkin("default");
         SpineRay3k.skeletonData = assetManager.get("spine/ray3k.json");
         SpineRay3k.animationData = assetManager.get("spine/ray3k.json-animation");
         SpineRay3k.animationAnimation = SpineRay3k.skeletonData.findAnimation("animation");
         SpineRay3k.animationStand = SpineRay3k.skeletonData.findAnimation("stand");
+        SpineRay3k.eventSwoosh = SpineRay3k.skeletonData.findEvent("swoosh");
+        SpineRay3k.eventTv = SpineRay3k.skeletonData.findEvent("tv");
+        SpineRay3k.boneRoot = SpineRay3k.skeletonData.findBone("root");
+        SpineRay3k.boneRay3kLogo = SpineRay3k.skeletonData.findBone("ray3k-logo");
+        SpineRay3k.boneRay3kLine = SpineRay3k.skeletonData.findBone("ray3k-line");
+        SpineRay3k.boneRay3kSpot = SpineRay3k.skeletonData.findBone("ray3k-spot");
+        SpineRay3k.slotWhite = SpineRay3k.skeletonData.findSlot("white");
+        SpineRay3k.slotRay3kSpot = SpineRay3k.skeletonData.findSlot("ray3k-spot");
+        SpineRay3k.slotRay3kLine = SpineRay3k.skeletonData.findSlot("ray3k-line");
+        SpineRay3k.slotRay3kLogo = SpineRay3k.skeletonData.findSlot("ray3k-logo");
         SpineRay3k.skinDefault = SpineRay3k.skeletonData.findSkin("default");
         skin_skin = assetManager.get("skin/skin.json");
         SkinSkinStyles.bClose = skin_skin.get("close", Button.ButtonStyle.class);
@@ -113,6 +169,100 @@ public class Resources {
 
         public static Animation animationStand;
 
+        public static EventData eventAhh;
+
+        public static EventData eventLibgdx;
+
+        public static EventData eventPleaseDontKillMe;
+
+        public static EventData eventPleaseDontKillMe2;
+
+        public static EventData eventShot;
+
+        public static BoneData boneRoot;
+
+        public static BoneData boneBlood0;
+
+        public static BoneData boneBlood1;
+
+        public static BoneData boneBlood2;
+
+        public static BoneData boneBlood3;
+
+        public static BoneData boneBlood4;
+
+        public static BoneData boneBlood5;
+
+        public static BoneData boneBlood6;
+
+        public static BoneData boneBlood7;
+
+        public static BoneData boneBlood8;
+
+        public static BoneData boneBlood9;
+
+        public static BoneData boneBlood10;
+
+        public static BoneData boneBlood11;
+
+        public static BoneData boneLibgdxL;
+
+        public static BoneData boneLibgdxI;
+
+        public static BoneData boneLibgdxB;
+
+        public static BoneData boneLibgdxG;
+
+        public static BoneData boneLibgdxD;
+
+        public static BoneData boneLibgdxX;
+
+        public static BoneData boneSpark0;
+
+        public static SlotData slotLibgdxReference;
+
+        public static SlotData slotWhite;
+
+        public static SlotData slotBlood0;
+
+        public static SlotData slotBlood1;
+
+        public static SlotData slotBlood2;
+
+        public static SlotData slotBlood3;
+
+        public static SlotData slotBlood4;
+
+        public static SlotData slotBlood5;
+
+        public static SlotData slotBlood6;
+
+        public static SlotData slotBlood7;
+
+        public static SlotData slotBlood8;
+
+        public static SlotData slotBlood9;
+
+        public static SlotData slotBlood10;
+
+        public static SlotData slotBlood11;
+
+        public static SlotData slotLibgdxL;
+
+        public static SlotData slotLibgdxI;
+
+        public static SlotData slotLibgdxB;
+
+        public static SlotData slotLibgdxG;
+
+        public static SlotData slotLibgdxD;
+
+        public static SlotData slotLibgdxX;
+
+        public static SlotData slotMouth;
+
+        public static SlotData slotSpark0;
+
         public static com.esotericsoftware.spine.Skin skinDefault;
     }
 
@@ -124,6 +274,26 @@ public class Resources {
         public static Animation animationAnimation;
 
         public static Animation animationStand;
+
+        public static EventData eventSwoosh;
+
+        public static EventData eventTv;
+
+        public static BoneData boneRoot;
+
+        public static BoneData boneRay3kLogo;
+
+        public static BoneData boneRay3kLine;
+
+        public static BoneData boneRay3kSpot;
+
+        public static SlotData slotWhite;
+
+        public static SlotData slotRay3kSpot;
+
+        public static SlotData slotRay3kLine;
+
+        public static SlotData slotRay3kLogo;
 
         public static com.esotericsoftware.spine.Skin skinDefault;
     }
