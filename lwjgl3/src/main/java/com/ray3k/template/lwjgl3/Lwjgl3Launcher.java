@@ -1,14 +1,24 @@
 package com.ray3k.template.lwjgl3;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.*;
+import com.badlogic.gdx.utils.JsonValue.ValueType;
+import com.badlogic.gdx.utils.JsonWriter.OutputType;
 import com.ray3k.template.*;
 import com.ray3k.template.Resources.*;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Locale;
 
 import static com.ray3k.template.Core.*;
 
@@ -45,6 +55,7 @@ public class Lwjgl3Launcher implements CrossPlatformWorker {
 					table.add(label).right();
 					
 					var textField = new TextField(Integer.toString(field.getInt(null)), skin);
+					textField.setName(field.getName());
 					textField.setTextFieldFilter((textField1, c) -> Character.isDigit(c) || c == '-');
 					table.add(textField).expandX().left();
 					textField.addListener(new ChangeListener() {
@@ -60,6 +71,7 @@ public class Lwjgl3Launcher implements CrossPlatformWorker {
 					});
 				} else if (field.getType() == Boolean.TYPE) {
 					var textButton = new TextButton(field.getName(), skin, "toggle");
+					textButton.setName(field.getName());
 					textButton.setChecked(field.getBoolean(null));
 					table.add(textButton).colspan(2);
 					
@@ -78,6 +90,7 @@ public class Lwjgl3Launcher implements CrossPlatformWorker {
 					table.add(label).right();
 					
 					var textField = new TextField((String)field.get(null), skin);
+					textField.setName(field.getName());
 					table.add(textField).expandX().left();
 					
 					textField.addListener(new ChangeListener() {
@@ -95,6 +108,7 @@ public class Lwjgl3Launcher implements CrossPlatformWorker {
 					table.add(label).right();
 					
 					var textField = new TextField(Float.toString(field.getFloat(null)), skin);
+					textField.setName(field.getName());
 					textField.setTextFieldFilter((textField1, c) -> Character.isDigit(c) || c == '-' || c == '.');
 					table.add(textField).expandX().left();
 					textField.addListener(new ChangeListener() {
@@ -103,33 +117,6 @@ public class Lwjgl3Launcher implements CrossPlatformWorker {
 							try {
 								var text = textField.getText();
 								field.set(null, text == null || text.equals("") || !text.matches("-?\\d+(\\.\\d+)?") ? 0 : Float.parseFloat(text));
-							} catch (IllegalAccessException e) {
-								e.printStackTrace();
-							}
-						}
-					});
-				} else if (field.getType() == Range.class) {
-					var label = new Label(field.getName() + ":", skin);
-					table.add(label).right();
-					
-					var subTable = new Table();
-					table.add(subTable).left();
-					
-					var range = (Range) field.get(null);
-					var slider = new Slider(range.min,  range.max, .01f, false, skin);
-					var fieldValue = iter.next();
-					slider.setValue(fieldValue.getFloat(null));
-					subTable.add(slider);
-					
-					var valueLabel = new Label(Float.toString(slider.getValue()), skin);
-					subTable.add(valueLabel).minWidth(100f).space(5f);
-					
-					slider.addListener(new ChangeListener() {
-						@Override
-						public void changed(ChangeEvent event, Actor actor) {
-							try {
-								fieldValue.setFloat(null, slider.getValue());
-								valueLabel.setText(String.format("%.2f", slider.getValue()));
 							} catch (IllegalAccessException e) {
 								e.printStackTrace();
 							}
@@ -144,5 +131,38 @@ public class Lwjgl3Launcher implements CrossPlatformWorker {
 		}
 		
 		return table;
+	}
+	
+	@Override
+	public void saveDebugValues(Table table) {
+		var iter = Arrays.stream(Values.class.getFields()).iterator();
+		var jsonValue = new JsonValue(ValueType.object);
+		
+		while (iter.hasNext()) {
+			var field = iter.next();
+			var type = field.getType();
+			var name = field.getName();
+			
+			if (type == Integer.TYPE) {
+				TextField textField = table.findActor(name);
+				var value = Integer.parseInt(textField.getText());
+				jsonValue.addChild(name, new JsonValue(value));
+			} else if (type == Boolean.TYPE) {
+				TextButton textButton = table.findActor(name);
+				var value = textButton.isChecked();
+				jsonValue.addChild(name, new JsonValue(value));
+			} else if (type == String.class) {
+				TextField textField = table.findActor(name);
+				var value = textField.getText();
+				jsonValue.addChild(name, new JsonValue(value));
+			} else if (type == Float.TYPE) {
+				TextField textField = table.findActor(name);
+				var value = Float.parseFloat(textField.getText());
+				jsonValue.addChild(name, new JsonValue(value));
+			}
+		}
+		
+		var file = new FileHandle(Paths.get("assets/data/values.json").toFile());
+		file.writeString(jsonValue.prettyPrint(OutputType.json, 20), false, "UTF-8");
 	}
 }

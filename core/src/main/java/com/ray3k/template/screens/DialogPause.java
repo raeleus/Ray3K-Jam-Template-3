@@ -13,12 +13,10 @@ import com.ray3k.template.*;
 import static com.ray3k.template.Core.*;
 
 public class DialogPause extends Dialog {
-    private JamScreen jamScreen;
     private boolean detectInput;
     
     public DialogPause(JamScreen jamScreen) {
         super("", skin);
-        this.jamScreen = jamScreen;
         
         detectInput = true;
     

@@ -1,12 +1,12 @@
 package com.ray3k.template.screens;
 
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.esotericsoftware.spine.Skin;
 import com.ray3k.template.*;
 
 public class DialogDebug extends Dialog {
@@ -15,8 +15,17 @@ public class DialogDebug extends Dialog {
         setFillParent(true);
         button("close").key(Keys.ESCAPE, null).key(Keys.ENTER, null).key(Keys.F10, null);
         
+        var textButton = new TextButton("save", Core.skin);
+        button(textButton);
+        
         var table = Core.crossPlatformWorker.generateDebugTable();
         if (table != null) {
+            textButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    Core.crossPlatformWorker.saveDebugValues(table);
+                }
+            });
             var scrollPane = new ScrollPane(table, Core.skin);
             scrollPane.setName("scrollPane");
             scrollPane.setFadeScrollBars(false);

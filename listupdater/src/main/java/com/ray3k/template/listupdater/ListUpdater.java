@@ -249,21 +249,9 @@ public class ListUpdater {
                 methodSpecBuilder.addStatement("$L = assetManager.get($S)", resource.variableName, sanitizePath(resource.file.path()));
             }
         }
-        
-        var rangeType = TypeSpec.classBuilder("Range")
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                .addField(Float.TYPE, "min", Modifier.PUBLIC)
-                .addField(Float.TYPE, "max", Modifier.PUBLIC)
-                .addMethod(MethodSpec.constructorBuilder()
-                        .addParameter(Float.TYPE, "min")
-                        .addParameter(Float.TYPE, "max")
-                        .addStatement("this.min = min")
-                        .addStatement("this.max = max")
-                        .build())
-                .build();
-        
+    
         for (var dataFile : dataPath.list()) {
-            subTypes.add(readDataFile(dataFile, rangeType));
+            subTypes.add(readDataFile(dataFile));
         }
         
         var methodSpec = methodSpecBuilder.build();
@@ -278,7 +266,6 @@ public class ListUpdater {
             typeSpecBuilder.addType(subType);
         }
         
-        typeSpecBuilder.addType(rangeType);
         var typeSpec = typeSpecBuilder.build();
         
         var javaFile = JavaFile.builder("com.ray3k.template", typeSpec)
@@ -408,7 +395,7 @@ public class ListUpdater {
         }
     }
     
-    public static TypeSpec readDataFile(FileHandle file, TypeSpec rangeType) {
+    public static TypeSpec readDataFile(FileHandle file) {
         var typeSpecBuilder = TypeSpec.classBuilder(upperCaseFirstLetter(sanitizeVariableName(file.nameWithoutExtension())))
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC);
         var jsonReader = new JsonReader();
@@ -435,17 +422,6 @@ public class ListUpdater {
             } else if (value.isString()) {
                 var fieldSpec = FieldSpec.builder(String.class, sanitizeVariableName(value.name), Modifier.PUBLIC, Modifier.STATIC)
                         .initializer("$S", value.asString())
-                        .build();
-                typeSpecBuilder.addField(fieldSpec);
-            } else if (value.isArray()) {
-                var floats = value.asFloatArray();
-                var fieldSpec = FieldSpec.builder(TypeVariableName.get(rangeType.name), sanitizeVariableName(value.name + "Range"), Modifier.PUBLIC, Modifier.STATIC)
-                        .initializer("new $N($Lf, $Lf)", rangeType, floats[0], floats[1])
-                        .build();
-                typeSpecBuilder.addField(fieldSpec);
-                
-                fieldSpec = FieldSpec.builder(Float.TYPE, sanitizeVariableName(value.name), Modifier.PUBLIC, Modifier.STATIC)
-                        .initializer("$Lf", floats[2])
                         .build();
                 typeSpecBuilder.addField(fieldSpec);
             }

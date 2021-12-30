@@ -22,8 +22,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.ui.Tree;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.esotericsoftware.spine.*;
-
+import com.esotericsoftware.spine.Animation;
+import com.esotericsoftware.spine.AnimationStateData;
+import com.esotericsoftware.spine.BoneData;
+import com.esotericsoftware.spine.EventData;
+import com.esotericsoftware.spine.SkeletonData;
+import com.esotericsoftware.spine.SlotData;
 import java.lang.String;
 
 public class Resources {
@@ -368,20 +372,5 @@ public class Resources {
         public static boolean godMode = true;
 
         public static int id = 10;
-
-        public static Range speedLimitRange = new Range(0.0f, 10.0f);
-
-        public static float speedLimit = 5.0f;
-    }
-
-    public static class Range {
-        public float min;
-
-        public float max;
-
-        Range(float min, float max) {
-            this.min = min;
-            this.max = max;
-        }
     }
 }

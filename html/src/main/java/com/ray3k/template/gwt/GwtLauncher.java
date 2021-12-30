@@ -82,4 +82,9 @@ public class GwtLauncher extends GwtApplication implements CrossPlatformWorker {
     public Table generateDebugTable() {
         return null;
     }
+    
+    @Override
+    public void saveDebugValues(Table table) {
+    
+    }
 }
