@@ -71,6 +71,8 @@ public class ListUpdater {
                 } else {
                     System.out.println("Lists not updated.");
                 }
+    
+                java.awt.Toolkit.getDefaultToolkit().beep();
                 Gdx.app.exit();
             }
         }, new Lwjgl3ApplicationConfiguration());
