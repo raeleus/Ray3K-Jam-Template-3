@@ -7,7 +7,7 @@
     <inherits name="com.badlogic.gdx.graphics.g2d.freetype.freetype-gwt" />
     <inherits name="com.ray3k.tenpatch.tenpatch"/>
     <inherits name="space.earlygrey.shapedrawer"/>
-    <inherits name="com.rafaskoberg.gdx.typinglabel.typinglabel" />
+    <inherits name="textratypist" />
     <inherits name="regexodus"/>
     <inherits name="com.esotericsoftware.spine"/>
     <inherits name="com.ray3k.stripe" />

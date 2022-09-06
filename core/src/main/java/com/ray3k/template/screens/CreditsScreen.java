@@ -11,8 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.rafaskoberg.gdx.typinglabel.TypingConfig;
-import com.rafaskoberg.gdx.typinglabel.TypingLabel;
+import com.github.tommyettinger.textra.TypingConfig;
+import com.github.tommyettinger.textra.TypingLabel;
 import com.ray3k.template.*;
 
 import static com.ray3k.template.Core.*;
@@ -42,7 +42,7 @@ public class CreditsScreen extends JamScreen {
     
         TypingConfig.INTERVAL_MULTIPLIERS_BY_CHAR.put('\n', .5f);
         Label label = stage.getRoot().findActor("label");
-        var typingLabel = new TypingLabel(label.getText(), skin);
+        var typingLabel = new TypingLabel(label.getText().toString(), skin);
         typingLabel.setAlignment(Align.center);
         ((Table) label.getParent()).getCell(label).setActor(typingLabel);
     }
