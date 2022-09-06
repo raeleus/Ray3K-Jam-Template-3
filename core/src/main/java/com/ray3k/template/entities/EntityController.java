@@ -104,6 +104,7 @@ public class EntityController implements Disposable {
         
         //simulate physics and call act methods
         for (Entity entity : sortedEntities) {
+            if (entity.moveTargetActivated) entity.moveTargetActivated = !entity.moveTowards(entity.moveTargetSpeed, entity.moveTargetX, entity.moveTargetY, delta);
             entity.deltaX += entity.gravityX * delta;
             entity.deltaY += entity.gravityY * delta;
             
