@@ -413,4 +413,8 @@ public class Utils {
         }
         return null;
     }
+    
+    public static String intToTwoDigit(int value) {
+        return (value < 10 ? "0" : "") + value;
+    }
 }
